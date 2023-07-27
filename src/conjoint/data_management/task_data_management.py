@@ -3,7 +3,7 @@
 import pandas as pd
 import pytask
 
-from conjoint.config import BLD, SRC
+from config import BLD, SRC
 from conjoint.data_management import clean_data
 from conjoint.utilities import read_yaml
 
@@ -12,7 +12,7 @@ from conjoint.utilities import read_yaml
     {
         "scripts": ["clean_data.py"],
         "data_info": SRC / "data_management" / "data_info.yaml",
-        "data": SRC / "data" / "data.csv",
+        "data": SRC / "data" / "india_raw.csv",
     },
 )
 @pytask.mark.produces(BLD / "python" / "data" / "data_clean.csv")

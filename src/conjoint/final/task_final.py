@@ -4,7 +4,7 @@ import pandas as pd
 import pytask
 
 from conjoint.analysis.model import load_model
-from conjoint.config import BLD, GROUPS, SRC
+from config import BLD, SRC
 from conjoint.final import plot_regression_by_age
 from conjoint.utilities import read_yaml
 
