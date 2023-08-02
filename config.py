@@ -2,7 +2,7 @@
 from pathlib import Path
 
 SRC = Path(__file__).parent.resolve() / "src"
-BLD = SRC.joinpath("..", "..", "bld").resolve()
+BLD = Path(__file__).parent.resolve() / "bld"
 
 DATA = SRC / "conjoint" / "data"
 MOCK_DATA = SRC / "conjoint" / "data" / "mock_data"

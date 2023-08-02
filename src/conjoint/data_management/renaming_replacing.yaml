@@ -1,0 +1,41 @@
+utility:
+  Strongly Like : 7
+  Like : 6
+  Somewhat Like : 5
+  Neutral : 4
+  Somewhat Dislike : 3
+  Dislike : 2
+  Strongly Dislike : 1
+
+attributes:
+  coal:
+    continue with coal and build new plants : StatusQuo
+    stop building new coal-fired power plants, apart from those already in the pipeline : Stop&Maintain
+    stop building new coal-fired power plants and reduce the lifespans of operating : Stop&Reduce
+    phase out coal use from its power sector by 2040, with substantial reductions by 2030 : PhaseOut
+  recognitive:
+    continue current (Low) investments in renewables : LowInvestment
+    continue current (Low) investments in renewables and consideration of local communities where project are built : LowInvestment&LowConsideration
+    increase investments in renewables with the help of the international community : HighInvestment&Int
+    increase investments in renewables with the help of the international community and consideration of local communities where project are built : HighInvestment&Int&Consideration
+  soc_distributive:
+    not implement any policy : Nothing
+    maintain low energy prices : LowPrices
+    transfer cash to all (or poorest) : Transfers
+    increase investments in health/education : HealthEdu
+    ensure energy access  and transition away from the use of traditional biomass such as burning wood : EnergyAccess
+  eco_distributive :
+    not implement any policy : Nothing
+    implement early pension plans for coal workers : EarlyPension
+    secure job guarantee for coal workers : JobGuarantee
+    invest more in construction of renewables to create jobs : CreateJobs
+    retrain workers in the coal industry : Retrain
+  procedural:
+    the civil society and non-profit organisations : CivilNGO 
+    the energy sector : EnergySector
+    media : Media
+    only the central government : CentralGov
+    labor unions : LabourUnion
+    researchers : Researchers
+    local governments : LocalGov
+  
