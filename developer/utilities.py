@@ -1,5 +1,4 @@
 """Utilities used in various parts of the project."""
-
 import yaml
 
 
@@ -23,3 +22,5 @@ def read_yaml(path):
             )
             raise ValueError(info) from error
     return out
+
+__all__ = ["read_yaml"]

@@ -1,0 +1,42 @@
+# Set order (higher means later)
+order:
+  att_1:
+    - 'PhaseOut'
+    - 'Stop&Reduce'
+    - 'Stop&Maintain'
+    - 'StatusQuo'
+  att_2:
+    - 'HighInvestment&Int'
+    - 'HighInvestment&Int&Consideration'
+    - 'LowInvestment&LowConsideration'
+    - 'LowInvestment'
+  att_3:
+    - 'HealthEdu'
+    - 'EnergyAccess'
+    - 'LowPrices'
+    - 'Transfers'
+    - 'NothingSoc'
+  att_4:
+    - 'CreateJobs'
+    - 'EarlyPension'
+    - 'JobGuarantee'
+    - 'Retrain'
+    - 'NothingEco'
+  att_5:
+    - 'CivilNGO'
+    - 'EnergySector'
+    - 'LabourUnion'
+    - 'LocalGov'
+    - 'Media'
+    - 'Researchers'
+    - 'CentralGov'
+  att_6:
+    - 'Not specified'
+#Wait with 6
+
+colors:
+  - 'red' #att_5
+  - 'blue' #att_4
+  - 'green' #att_3
+  - 'orange' #att_2
+  - 'purple' #att_1

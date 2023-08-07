@@ -2,10 +2,10 @@
 requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.0"]
 
 [tool.setuptools_scm]
-write_to = "src/conjoint/_version.py"
+write_to = "data/_version.py"
 
 [tool.pytask.ini_options]
-paths = ["./src/conjoint", "./paper"]
+paths = ["."]
 infer_latex_dependencies = true
 
 [tool.ruff]

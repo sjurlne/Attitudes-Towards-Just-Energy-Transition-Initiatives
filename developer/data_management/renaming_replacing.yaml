@@ -19,13 +19,13 @@ attributes:
     increase investments in renewables with the help of the international community : HighInvestment&Int
     increase investments in renewables with the help of the international community and consideration of local communities where project are built : HighInvestment&Int&Consideration
   soc_distributive:
-    not implement any policy : Nothing
+    not implement any social policy : NothingSoc
     maintain low energy prices : LowPrices
     transfer cash to all (or poorest) : Transfers
     increase investments in health/education : HealthEdu
     ensure energy access  and transition away from the use of traditional biomass such as burning wood : EnergyAccess
   eco_distributive :
-    not implement any policy : Nothing
+    not implement any policy : NothingEco
     implement early pension plans for coal workers : EarlyPension
     secure job guarantee for coal workers : JobGuarantee
     invest more in construction of renewables to create jobs : CreateJobs
@@ -38,4 +38,16 @@ attributes:
     labor unions : LabourUnion
     researchers : Researchers
     local governments : LocalGov
+
+new_names:
+  - 'att_1_A'
+  - 'att_1_B'
+  - 'att_2_A'
+  - 'att_2_B'
+  - 'att_3_A'
+  - 'att_3_B'
+  - 'att_4_A'
+  - 'att_4_B'
+  - 'att_5_A'
+  - 'att_5_B'
   
