@@ -7,7 +7,7 @@ import pandas as pd
 import pytask
 
 from config import OUT, CODE, IN, MOCK_DATA
-from data_management.cleaning import clean_data, make_long, make_dummy, make_ready_for_regression, frequencies
+from data_management.cleaning import clean_data, make_long, make_dummy, make_ready_for_regression, frequencies, standardize
 from utilities import read_yaml
 
 RAW_FILES = {
@@ -35,6 +35,7 @@ def task_clean_data_python(produces, raw_files=RAW_FILES,):
     # Cleaned data for regression
     data_regression = make_dummy(data, renaming_specs)
     data_regression = make_ready_for_regression(data_regression)
+    data_regression = standardize(data_regression, "utility")
     
     data_freq = frequencies(data_regression)
 

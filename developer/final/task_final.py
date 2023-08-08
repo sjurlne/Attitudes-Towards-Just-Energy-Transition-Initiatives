@@ -25,7 +25,7 @@ def task_plot_relative_differences(depends_on, produces):
     data_info = read_yaml(depends_on["data_info"])
     model = load_model(depends_on["data"])
 
-    fig = plot_relative_differences(model, data_info)
+    fig = plot_relative_differences(model, data_info, width=1.0)
     fig.write_image(produces)
 
 

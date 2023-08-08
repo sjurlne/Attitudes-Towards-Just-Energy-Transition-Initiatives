@@ -86,6 +86,10 @@ variables:
     - 'choice_set_4'
     - 'choice_set_5'
     - 'choice_set_6'
+  treatment:
+    type: 'numerical'
+    names:
+    - 'treatment_status'
 names:
   attributes:
   - 

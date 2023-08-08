@@ -3,7 +3,7 @@
 import plotly.graph_objects as go
 
 
-def plot_relative_differences(model, data_info):
+def plot_relative_differences(model, data_info, width=1.0, plot_title="Relative Differences Standardized"):
 
     order = data_info['order']
     att_1_levels = order['att_1']
@@ -40,8 +40,8 @@ def plot_relative_differences(model, data_info):
 
         fig.add_shape(
             type="rect",
-            x0=-1.5,  # Set a fixed value for x0, which is left side of the plot
-            x1=1.5,  # Set the width of the shape to 1000 (right side of the plot)
+            x0=-width,  # Set a fixed value for x0, which is left side of the plot
+            x1=width,  # Set the width of the shape to 1000 (right side of the plot)
             y0=total_levels - sum(len(l) for l in att_levels[i:]),  # Set y0 to the starting level index
             y1=total_levels - sum(len(l) for l in att_levels[i:]) + len(levels) - 1,  # Set y1 to the ending level index
             fillcolor=att_colors[i],
@@ -54,7 +54,7 @@ def plot_relative_differences(model, data_info):
 
     # Update the layout of the error bar plot
     fig.update_layout(
-        title='Relative Rating Differences',
+        title=plot_title,
         xaxis_title='',
         yaxis_title='Attribute Levels',
         yaxis=dict(categoryorder='array', categoryarray=att_5_levels),  # Set the categoryorder for y-axis based on att_1_levels

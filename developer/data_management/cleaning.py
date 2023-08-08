@@ -20,6 +20,7 @@ def clean_data(df, specs, renaming_specs):
     df = df.drop([0, 1])
     
     df = df.replace(renaming_specs['utility'])
+    df = df.replace(renaming_specs['treatment'])
     for category in list(renaming_specs['attributes'].keys()):
         df = df.replace(renaming_specs['attributes'][category])
 
@@ -82,6 +83,7 @@ def make_long(df, renaming_specs):
     long_df = pd.DataFrame()
     for round in range(1,7):
         df_temp = df[['ID',
+                      'treatment_status',
                       f'round_{round}_att_1_a', 
                       f'round_{round}_att_1_b',
                       f'round_{round}_att_2_a', 
@@ -138,8 +140,8 @@ def make_dummy(df, renaming_specs):
     return df_with_dummies
 
 def make_ready_for_regression(df_with_dummies):
-    A_columns = [c for c in list(df_with_dummies.columns) if "_A" in c] + ["inconsistent"]
-    B_columns = [c for c in list(df_with_dummies.columns) if "_B" in c] + ["inconsistent"]
+    A_columns = [c for c in list(df_with_dummies.columns) if "_A" in c] + ["inconsistent", "treatment_status"]
+    B_columns = [c for c in list(df_with_dummies.columns) if "_B" in c] + ["inconsistent", "treatment_status"]
     new_columns = [col.replace( '_A', '') for col in A_columns]
 
     df_A = df_with_dummies[A_columns].copy()
@@ -164,3 +166,8 @@ def frequencies(conjoint_reg):
 
     frequency_table = frequency_table.rename_axis("Attribute_level")
     return frequency_table
+
+def standardize(df, column):
+    df[column] = (df[column] - df[column].mean()) / df[column].std()
+
+    return df

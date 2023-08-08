@@ -39,6 +39,10 @@ attributes:
     researchers : Researchers
     local governments : LocalGov
 
+treatment:
+  'treated' : 1
+  'control' : 0
+
 new_names:
   - 'att_1_A'
   - 'att_1_B'

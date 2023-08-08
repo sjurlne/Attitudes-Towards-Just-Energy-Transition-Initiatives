@@ -7,13 +7,13 @@ def fit_multi_logit_model(data):
     """Fit a logit model to data."""
 
     outcome_name = 'utility'
-    explanatory_vars = [col for col in data.columns if "att" in col]
+    explanatory_vars = [col for col in data.columns if "att" in col] + ['ID']
 
     X = data[explanatory_vars].astype(int)
     y = data[outcome_name].astype(int)
 
     X = sm.add_constant(X)
-    model = sm.OLS(y, X).fit()
+    model = sm.OLS(y, X).fit(cov_type='cluster', cov_kwds={'groups':X['ID']})
 
     return model
 

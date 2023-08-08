@@ -1,59 +1,60 @@
 \begin{center}
 \begin{tabular}{lclc}
 \toprule
-\textbf{Dep. Variable:}                             &     utility      & \textbf{  R-squared:         } &     0.171   \\
-\textbf{Model:}                                     &       OLS        & \textbf{  Adj. R-squared:    } &     0.022   \\
-\textbf{Method:}                                    &  Least Squares   & \textbf{  F-statistic:       } &     1.144   \\
-\textbf{Date:}                                      & Mon, 07 Aug 2023 & \textbf{  Prob (F-statistic):} &    0.317    \\
-\textbf{Time:}                                      &     15:24:29     & \textbf{  Log-Likelihood:    } &   -218.23   \\
-\textbf{No. Observations:}                          &         132      & \textbf{  AIC:               } &     478.5   \\
-\textbf{Df Residuals:}                              &         111      & \textbf{  BIC:               } &     539.0   \\
-\textbf{Df Model:}                                  &          20      & \textbf{                     } &             \\
-\textbf{Covariance Type:}                           &    nonrobust     & \textbf{                     } &             \\
+\textbf{Dep. Variable:}                             &     utility      & \textbf{  R-squared:         } &     0.198   \\
+\textbf{Model:}                                     &       OLS        & \textbf{  Adj. R-squared:    } &     0.045   \\
+\textbf{Method:}                                    &  Least Squares   & \textbf{  F-statistic:       } &    0.5149   \\
+\textbf{Date:}                                      & Tue, 08 Aug 2023 & \textbf{  Prob (F-statistic):} &    0.845    \\
+\textbf{Time:}                                      &     11:48:07     & \textbf{  Log-Likelihood:    } &   -137.13   \\
+\textbf{No. Observations:}                          &         132      & \textbf{  AIC:               } &     318.3   \\
+\textbf{Df Residuals:}                              &         110      & \textbf{  BIC:               } &     381.7   \\
+\textbf{Df Model:}                                  &          21      & \textbf{                     } &             \\
+\textbf{Covariance Type:}                           &     cluster      & \textbf{                     } &             \\
 \bottomrule
 \end{tabular}
 \begin{tabular}{lcccccc}
-                                                    & \textbf{coef} & \textbf{std err} & \textbf{t} & \textbf{P$> |$t$|$} & \textbf{[0.025} & \textbf{0.975]}  \\
+                                                    & \textbf{coef} & \textbf{std err} & \textbf{z} & \textbf{P$> |$z$|$} & \textbf{[0.025} & \textbf{0.975]}  \\
 \midrule
-\textbf{const}                                      &       2.2338  &        0.062     &    36.128  &         0.000        &        2.111    &        2.356     \\
-\textbf{att\_1\_PhaseOut}                           &       0.8810  &        0.237     &     3.718  &         0.000        &        0.411    &        1.351     \\
-\textbf{att\_1\_StatusQuo}                          &       0.2979  &        0.221     &     1.347  &         0.181        &       -0.140    &        0.736     \\
-\textbf{att\_1\_Stop\&Maintain}                     &       0.1471  &        0.233     &     0.631  &         0.529        &       -0.314    &        0.609     \\
-\textbf{att\_1\_Stop\&Reduce}                       &       0.9077  &        0.213     &     4.264  &         0.000        &        0.486    &        1.330     \\
-\textbf{att\_2\_HighInvestment\&Int}                &       0.3940  &        0.229     &     1.718  &         0.089        &       -0.060    &        0.848     \\
-\textbf{att\_2\_HighInvestment\&Int\&Consideration} &       0.5361  &        0.228     &     2.355  &         0.020        &        0.085    &        0.987     \\
-\textbf{att\_2\_LowInvestment}                      &       0.5776  &        0.220     &     2.628  &         0.010        &        0.142    &        1.013     \\
-\textbf{att\_2\_LowInvestment\&LowConsideration}    &       0.7261  &        0.229     &     3.169  &         0.002        &        0.272    &        1.180     \\
-\textbf{att\_3\_EnergyAccess}                       &       0.0403  &        0.254     &     0.158  &         0.874        &       -0.464    &        0.545     \\
-\textbf{att\_3\_HealthEdu}                          &       0.2461  &        0.238     &     1.034  &         0.303        &       -0.225    &        0.718     \\
-\textbf{att\_3\_LowPrices}                          &       0.4633  &        0.293     &     1.579  &         0.117        &       -0.118    &        1.045     \\
-\textbf{att\_3\_NothingSoc}                         &       0.4679  &        0.254     &     1.843  &         0.068        &       -0.035    &        0.971     \\
-\textbf{att\_3\_Transfers}                          &       1.0162  &        0.282     &     3.606  &         0.000        &        0.458    &        1.575     \\
-\textbf{att\_4\_CreateJobs}                         &       0.4902  &        0.250     &     1.958  &         0.053        &       -0.006    &        0.986     \\
-\textbf{att\_4\_EarlyPension}                       &       0.7348  &        0.286     &     2.569  &         0.012        &        0.168    &        1.302     \\
-\textbf{att\_4\_JobGuarantee}                       &       0.5672  &        0.256     &     2.219  &         0.029        &        0.061    &        1.074     \\
-\textbf{att\_4\_NothingEco}                         &       0.6819  &        0.243     &     2.801  &         0.006        &        0.200    &        1.164     \\
-\textbf{att\_4\_Retrain}                            &      -0.2403  &        0.283     &    -0.848  &         0.398        &       -0.802    &        0.321     \\
-\textbf{att\_5\_CentralGov}                         &       0.4544  &        0.341     &     1.332  &         0.186        &       -0.222    &        1.130     \\
-\textbf{att\_5\_CivilNGO}                           &       0.5033  &        0.305     &     1.650  &         0.102        &       -0.101    &        1.108     \\
-\textbf{att\_5\_EnergySector}                       &       0.4210  &        0.310     &     1.358  &         0.177        &       -0.193    &        1.035     \\
-\textbf{att\_5\_LabourUnion}                        &       0.9499  &        0.316     &     3.002  &         0.003        &        0.323    &        1.577     \\
-\textbf{att\_5\_LocalGov}                           &       0.0354  &        0.309     &     0.115  &         0.909        &       -0.576    &        0.647     \\
-\textbf{att\_5\_Media}                              &       0.2015  &        0.319     &     0.632  &         0.529        &       -0.430    &        0.833     \\
-\textbf{att\_5\_Researchers}                        &      -0.3317  &        0.307     &    -1.081  &         0.282        &       -0.940    &        0.276     \\
+\textbf{const}                                      &      -0.1239  &        0.056     &    -2.228  &         0.026        &       -0.233    &       -0.015     \\
+\textbf{att\_1\_PhaseOut}                           &       0.2036  &        0.106     &     1.923  &         0.055        &       -0.004    &        0.411     \\
+\textbf{att\_1\_StatusQuo}                          &      -0.2114  &        0.084     &    -2.512  &         0.012        &       -0.376    &       -0.046     \\
+\textbf{att\_1\_Stop\&Maintain}                     &      -0.2872  &        0.130     &    -2.203  &         0.028        &       -0.543    &       -0.032     \\
+\textbf{att\_1\_Stop\&Reduce}                       &       0.1712  &        0.140     &     1.224  &         0.221        &       -0.103    &        0.445     \\
+\textbf{att\_2\_HighInvestment\&Int}                &      -0.1737  &        0.128     &    -1.360  &         0.174        &       -0.424    &        0.077     \\
+\textbf{att\_2\_HighInvestment\&Int\&Consideration} &      -0.0190  &        0.121     &    -0.157  &         0.875        &       -0.256    &        0.218     \\
+\textbf{att\_2\_LowInvestment}                      &       0.0062  &        0.131     &     0.047  &         0.962        &       -0.251    &        0.264     \\
+\textbf{att\_2\_LowInvestment\&LowConsideration}    &       0.0627  &        0.065     &     0.965  &         0.335        &       -0.065    &        0.190     \\
+\textbf{att\_3\_EnergyAccess}                       &      -0.2091  &        0.133     &    -1.572  &         0.116        &       -0.470    &        0.052     \\
+\textbf{att\_3\_HealthEdu}                          &      -0.1532  &        0.166     &    -0.921  &         0.357        &       -0.479    &        0.173     \\
+\textbf{att\_3\_LowPrices}                          &      -0.0633  &        0.136     &    -0.466  &         0.641        &       -0.329    &        0.203     \\
+\textbf{att\_3\_NothingSoc}                         &       0.0136  &        0.125     &     0.109  &         0.913        &       -0.231    &        0.258     \\
+\textbf{att\_3\_Transfers}                          &       0.2881  &        0.137     &     2.097  &         0.036        &        0.019    &        0.557     \\
+\textbf{att\_4\_CreateJobs}                         &       0.0181  &        0.131     &     0.139  &         0.889        &       -0.238    &        0.274     \\
+\textbf{att\_4\_EarlyPension}                       &       0.1730  &        0.124     &     1.394  &         0.163        &       -0.070    &        0.416     \\
+\textbf{att\_4\_JobGuarantee}                       &       0.0343  &        0.104     &     0.330  &         0.741        &       -0.169    &        0.238     \\
+\textbf{att\_4\_NothingEco}                         &      -0.0197  &        0.153     &    -0.129  &         0.898        &       -0.320    &        0.281     \\
+\textbf{att\_4\_Retrain}                            &      -0.3297  &        0.113     &    -2.924  &         0.003        &       -0.551    &       -0.109     \\
+\textbf{att\_5\_CentralGov}                         &       0.1901  &        0.234     &     0.812  &         0.417        &       -0.269    &        0.649     \\
+\textbf{att\_5\_CivilNGO}                           &       0.0874  &        0.225     &     0.388  &         0.698        &       -0.355    &        0.529     \\
+\textbf{att\_5\_EnergySector}                       &       0.0670  &        0.263     &     0.255  &         0.799        &       -0.448    &        0.582     \\
+\textbf{att\_5\_LabourUnion}                        &       0.3040  &        0.230     &     1.321  &         0.187        &       -0.147    &        0.755     \\
+\textbf{att\_5\_LocalGov}                           &      -0.2174  &        0.081     &    -2.690  &         0.007        &       -0.376    &       -0.059     \\
+\textbf{att\_5\_Media}                              &      -0.1573  &        0.159     &    -0.989  &         0.323        &       -0.469    &        0.155     \\
+\textbf{att\_5\_Researchers}                        &      -0.3977  &        0.099     &    -4.017  &         0.000        &       -0.592    &       -0.204     \\
+\textbf{ID}                                         &       0.0470  &        0.017     &     2.739  &         0.006        &        0.013    &        0.081     \\
 \bottomrule
 \end{tabular}
 \begin{tabular}{lclc}
-\textbf{Omnibus:}       &  4.919 & \textbf{  Durbin-Watson:     } &    1.884  \\
-\textbf{Prob(Omnibus):} &  0.085 & \textbf{  Jarque-Bera (JB):  } &    4.211  \\
-\textbf{Skew:}          & -0.347 & \textbf{  Prob(JB):          } &    0.122  \\
-\textbf{Kurtosis:}      &  2.467 & \textbf{  Cond. No.          } & 2.05e+16  \\
+\textbf{Omnibus:}       &  6.185 & \textbf{  Durbin-Watson:     } &    1.984  \\
+\textbf{Prob(Omnibus):} &  0.045 & \textbf{  Jarque-Bera (JB):  } &    4.782  \\
+\textbf{Skew:}          & -0.352 & \textbf{  Prob(JB):          } &   0.0915  \\
+\textbf{Kurtosis:}      &  2.389 & \textbf{  Cond. No.          } & 8.24e+16  \\
 \bottomrule
 \end{tabular}
 %\caption{OLS Regression Results}
 \end{center}
 
 Notes: \newline
- [1] Standard Errors assume that the covariance matrix of the errors is correctly specified. \newline
- [2] The smallest eigenvalue is 6.49e-31. This might indicate that there are \newline
+ [1] Standard Errors are robust to cluster correlation (cluster) \newline
+ [2] The smallest eigenvalue is 9.27e-31. This might indicate that there are \newline
  strong multicollinearity problems or that the design matrix is singular.
