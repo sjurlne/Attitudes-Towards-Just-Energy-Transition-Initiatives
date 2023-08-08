@@ -40,3 +40,17 @@ colors:
   - 'green' #att_3
   - 'orange' #att_2
   - 'purple' #att_1
+
+colors_control:
+  - '#990000' #att_5
+  - '#0066CC' #att_4
+  - '#00CC66' #att_3
+  - '#CC6600' #att_2
+  - '#7F00FF' #att_1
+
+colors_treated:
+  - '#FF6666' #att_5
+  - '#66B2FF' #att_4
+  - '#66FFB2' #att_3
+  - '#FFB266' #att_2
+  - '#CC99FF' #att_1
