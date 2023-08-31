@@ -7,7 +7,7 @@ import pandas as pd
 import pytask
 
 from analysis.model import load_model
-from final.plot import plot_relative_differences, plot_relative_differences_grouped, attribute_support
+from final.plot import plot_relative_differences_grouped, attribute_support, plot_amce
 from config import OUT, CODE
 from utilities import read_yaml
 
@@ -43,7 +43,7 @@ def task_plot_relative_differences(depends_on, produces):
     model = load_model(depends_on["data"])
 
     #
-    fig = plot_relative_differences(model, data_info, width=1.0)
+    fig = plot_amce(model, data_info, width=1.0)
     fig.write_image(produces['total'])
 
     # Grouped by:

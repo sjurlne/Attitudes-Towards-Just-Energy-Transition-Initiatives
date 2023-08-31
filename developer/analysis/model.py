@@ -4,10 +4,10 @@ from statsmodels.iolib.smpickle import load_pickle
 import statsmodels.api as sm
 
 
-def fit_multi_logit_model(data):
+def fit_model_support(data):
     """Fit a logit model to data."""
 
-    outcome_name = 'utility'
+    outcome_name = 'support'
     explanatory_vars = [col for col in data.columns if "att" in col] + ['ID']
 
     X = data[explanatory_vars].astype(int)

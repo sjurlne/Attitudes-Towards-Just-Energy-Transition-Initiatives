@@ -6,7 +6,7 @@ sys.path = list(set(sys.path))
 import pandas as pd
 import pytask
 
-from analysis.model import fit_multi_logit_model, fit_multi_logit_model_group
+from analysis.model import fit_model_support, fit_multi_logit_model_group
 from config import OUT
 
 
@@ -26,13 +26,14 @@ from config import OUT
     )
 def task_fit_model_python(depends_on, produces):
     
+    
     data = pd.read_csv(depends_on["data"])
     data_control = data[data['treatment_status']==0]
     data_treated = data[data['treatment_status']==1]
     data_low_trust = data[data['trust_ID']==0]
     data_high_trust = data[data['trust_ID']==1]
 
-    model = fit_multi_logit_model(data)
+    model = fit_model_support(data)
     #model_control = fit_multi_logit_model_group(data_control)
     #model_treated = fit_multi_logit_model_group(data_treated)
     #model_low_trust = fit_multi_logit_model_group(data_low_trust)

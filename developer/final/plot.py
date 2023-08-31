@@ -60,9 +60,7 @@ def attribute_support(df, attribute):
 
 
 
-
-
-def plot_relative_differences(model, data_info, width=1.0, plot_title="Relative Differences Standardized"):
+def plot_amce(model, data_info, width=1.0, plot_title="Fig 2: AMCE on support for policy attributes"):
 
     order = data_info['order']
     att_1_levels = order['att_1']
@@ -92,7 +90,7 @@ def plot_relative_differences(model, data_info, width=1.0, plot_title="Relative 
             y=levels,
             mode='markers',
             error_x=dict(type='data', array=att_standard_errors, color=att_colors[i], thickness=1.5),
-            marker=dict(color='darkgray', size=10),
+            marker=dict(color='#36454F', size=10),
             orientation='h',
             showlegend = False,
         ))
@@ -113,7 +111,12 @@ def plot_relative_differences(model, data_info, width=1.0, plot_title="Relative 
 
     # Update the layout of the error bar plot
     fig.update_layout(
-        title=plot_title,
+        title={
+            'text': plot_title,
+            'x': 0.5,
+            'xanchor': 'center',
+            'font': {'family': 'Computer Modern'}
+        },
         xaxis_title='',
         yaxis_title='Attribute Levels',
         yaxis=dict(categoryorder='array', categoryarray=att_6_levels),  # Set the categoryorder for y-axis based on att_1_levels
@@ -123,6 +126,8 @@ def plot_relative_differences(model, data_info, width=1.0, plot_title="Relative 
         height=600,  # Set the height of the plot to 600 pixels
         width=1000,
         title_x=0.62,
+        paper_bgcolor="#EADDCA",
+        plot_bgcolor='rgba(0,0,0,0)',
     )
 
     # Show the interactive error bar plot
