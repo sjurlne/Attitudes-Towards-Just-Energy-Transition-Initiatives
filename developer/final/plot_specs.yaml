@@ -1,40 +1,41 @@
 # Set order (higher means later)
 order:
+  #Bottom means higher in the plot.
   att_1:
-    - 'PhaseOut'
-    - 'Stop&Reduce'
-    - 'Stop&Maintain'
-    - 'StatusQuo'
+    - 'Eliminate&UseRenewables'
+    - 'Eliminate&UseAllOther'
+    - 'Reduce&IncreaseRenewables'
+    - 'Reduce&IncreaseAllOther'
   att_2:
-    - 'HighInvestment&Int'
-    - 'HighInvestment&Int&Consideration'
-    - 'LowInvestment&LowConsideration'
-    - 'LowInvestment'
+    - LowPrices
+    - InsureWorkers
+    - HealthEdu
+    - EnergyAccess
+    - NothingSoc
   att_3:
-    - 'HealthEdu'
-    - 'EnergyAccess'
-    - 'LowPrices'
-    - 'Transfers'
-    - 'NothingSoc'
+    - IdentityCoalRegions
+    - IndustryCoalRegions
+    - WorkersCoalRegion
+    - NothingEco
   att_4:
-    - 'CreateJobs'
-    - 'EarlyPension'
-    - 'JobGuarantee'
-    - 'Retrain'
-    - 'NothingEco'
+    - Gov&CivilSociety
+    - Gov&Researchers
+    - Gov&Businesses
+    - Gov&LaborUnions
+    - Gov&LocalGov
+    - GovAlone 
   att_5:
-    - 'CivilNGO'
-    - 'EnergySector'
-    - 'LabourUnion'
-    - 'LocalGov'
-    - 'Media'
-    - 'Researchers'
-    - 'CentralGov'
+    - Fin&TechSupport
+    - FinSupportOnly
+    - TechSupportOnly
+    - NoInterference
   att_6:
-    - 'Not specified'
-#Wait with 6
+    - SignificantEffort
+    - ModerateEfforts
+    - MinorEfforts
 
 colors:
+  - 'grey' #att_6
   - 'red' #att_5
   - 'blue' #att_4
   - 'green' #att_3
@@ -42,6 +43,7 @@ colors:
   - 'purple' #att_1
 
 colors_control:
+  - '#708090' #att_6
   - '#990000' #att_5
   - '#0066CC' #att_4
   - '#00CC66' #att_3
@@ -49,6 +51,7 @@ colors_control:
   - '#7F00FF' #att_1
 
 colors_treated:
+  - '#8A9A5B' #att_6
   - '#FF6666' #att_5
   - '#66B2FF' #att_4
   - '#66FFB2' #att_3

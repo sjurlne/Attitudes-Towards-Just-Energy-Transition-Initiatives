@@ -9,39 +9,50 @@ utility:
 
 attributes:
   coal:
-    continue with coal and build new plants : StatusQuo
-    stop building new coal-fired power plants, apart from those already in the pipeline : Stop&Maintain
-    stop building new coal-fired power plants and reduce the lifespans of operating : Stop&Reduce
-    phase out coal use from its power sector by 2040, with substantial reductions by 2030 : PhaseOut
-  recognitive:
-    continue current (Low) investments in renewables : LowInvestment
-    continue current (Low) investments in renewables and consideration of local communities where project are built : LowInvestment&LowConsideration
-    increase investments in renewables with the help of the international community : HighInvestment&Int
-    increase investments in renewables with the help of the international community and consideration of local communities where project are built : HighInvestment&Int&Consideration
+    Reduce the use of coal and increase the use of all alternative energy sources : Reduce&IncreaseAllOther
+    Reduce the use of coal and increase the use of renewable energy sources : Reduce&IncreaseRenewables
+    Eliminate coal use and only use alternative energy sources by 2050 : Eliminate&UseAllOther
+    Eliminate coal use and only use renewable energy sources by 2050 : Eliminate&UseRenewables
   soc_distributive:
-    not implement any social policy : NothingSoc
-    maintain low energy prices : LowPrices
-    transfer cash to all (or poorest) : Transfers
-    increase investments in health/education : HealthEdu
-    ensure energy access  and transition away from the use of traditional biomass such as burning wood : EnergyAccess
+    Implement no additional policy : NothingSoc
+    Ensure that energy prices are low : LowPrices
+    Implement insurance programs for coal workers if they lose their job : InsureWorkers
+    Invest in health and education : HealthEdu
+    Try to expand energy access to all citizens : EnergyAccess
   eco_distributive :
-    not implement any policy : NothingEco
-    implement early pension plans for coal workers : EarlyPension
-    secure job guarantee for coal workers : JobGuarantee
-    invest more in construction of renewables to create jobs : CreateJobs
-    retrain workers in the coal industry : Retrain
+    Implement no additional policy : NothingEco
+    Facilitate restructuring of coal regions based on identity/history of the area : IdentityCoalRegions
+    Facilitate renewable energy industry within coal regions : IndustryCoalRegions
+    Facilitate training for coal workers to transition to new industries : WorkersCoalRegion
   procedural:
-    the civil society and non-profit organisations : CivilNGO 
-    the energy sector : EnergySector
-    media : Media
-    only the central government : CentralGov
-    labor unions : LabourUnion
-    researchers : Researchers
-    local governments : LocalGov
+    Lead the process alone : GovAlone 
+    Form a commission with different actors especially including local government : Gov&LocalGov
+    Form a commission with different actors especially including civil society groups : Gov&CivilSociety
+    Form a commission with different actors especially including researchers : Gov&Researchers
+    Form a commission with different actors especially including businesses : Gov&Businesses
+    Form a commission with different actors especially including labor unions : Gov&LaborUnions
+  restorative_within:
+    Provide India with financial and technical support : Fin&TechSupport
+    Provide India with only financial support : FinSupportOnly
+    Provide India with only technical support : TechSupportOnly
+    Leave financial and technical issues to India : NoInterference
+  restorative_outside:
+    take minor actions to drastically cut their own emissions : MinorEfforts
+    take moderate actions to drastically cut their own emissions : ModerateEfforts
+    take significant actions to drastically cut their own emissions : SignificantEffort
 
 treatment:
   'treated' : 1
   'control' : 0
+
+trust:
+  Strongly agree : 7
+  Agree : 6
+  Somewhat agree : 5
+  Neither agree nor disagree : 4
+  Somewhat disagree : 3
+  Disagree : 2
+  Strongly disagree : 1
 
 new_names:
   - 'att_1_A'
@@ -54,4 +65,6 @@ new_names:
   - 'att_4_B'
   - 'att_5_A'
   - 'att_5_B'
+  - 'att_6_A'
+  - 'att_6_B'
   

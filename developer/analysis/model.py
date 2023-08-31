@@ -3,6 +3,7 @@
 from statsmodels.iolib.smpickle import load_pickle
 import statsmodels.api as sm
 
+
 def fit_multi_logit_model(data):
     """Fit a logit model to data."""
 
@@ -14,6 +15,21 @@ def fit_multi_logit_model(data):
 
     X = sm.add_constant(X)
     model = sm.OLS(y, X).fit(cov_type='cluster', cov_kwds={'groups':X['ID']})
+
+    return model
+
+
+def fit_multi_logit_model_group(data):
+    """Fit a logit model to data."""
+
+    outcome_name = 'support'
+    explanatory_vars = [col for col in data.columns if "att" in col] + ['ID']
+
+    X = data[explanatory_vars].astype(int)
+    y = data[outcome_name].astype(int)
+
+    X = sm.add_constant(X)
+    model = sm.Logit(y, X).fit(cov_type='cluster', cov_kwds={'groups':X['ID']})
 
     return model
 

@@ -7,12 +7,12 @@ import pandas as pd
 import pytask
 
 from config import OUT, CODE, IN, MOCK_DATA
-from data_management.cleaning import clean_data, make_long, make_dummy, make_ready_for_regression, frequencies, standardize
+from data_management.cleaning import clean_data, make_long, make_dummy, make_ready_for_regression, frequencies, standardize, make_long_descriptive
 from utilities import read_yaml
 
 RAW_FILES = {
         "raw_data": IN / "raw_data.csv",
-        "mock_data" : MOCK_DATA / "raw_data_mock.csv", 
+        "mock_data" : MOCK_DATA / "new_mock_data.csv", 
         "specs": CODE / "data_management" / "specs.yaml",
         "renaming_replacing" : CODE / "data_management" / "renaming_replacing.yaml",
     }
@@ -36,9 +36,13 @@ def task_clean_data_python(produces, raw_files=RAW_FILES,):
     data_regression = make_dummy(data, renaming_specs)
     data_regression = make_ready_for_regression(data_regression)
     data_regression = standardize(data_regression, "utility")
-    
+    data = make_long_descriptive(data)
+
     data_freq = frequencies(data_regression)
 
+
+    
+    
     data.to_csv(produces["clean"], index=True)
     data_regression.to_csv(produces["regression"], index=True)
     data_freq.to_csv(produces['freq'], index=True)

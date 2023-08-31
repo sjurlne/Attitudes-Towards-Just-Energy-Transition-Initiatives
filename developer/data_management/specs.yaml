@@ -12,6 +12,8 @@ variables:
     - 'round_1_att_4_b'
     - 'round_1_att_5_a'
     - 'round_1_att_5_b'
+    - 'round_1_att_6_a'
+    - 'round_1_att_6_b'
     - 'round_2_att_1_a'
     - 'round_2_att_1_b'
     - 'round_2_att_2_a'
@@ -22,6 +24,8 @@ variables:
     - 'round_2_att_4_b'
     - 'round_2_att_5_a'
     - 'round_2_att_5_b'
+    - 'round_2_att_6_a'
+    - 'round_2_att_6_b'
     - 'round_3_att_1_a'
     - 'round_3_att_1_b'
     - 'round_3_att_2_a'
@@ -32,6 +36,8 @@ variables:
     - 'round_3_att_4_b'
     - 'round_3_att_5_a'
     - 'round_3_att_5_b'
+    - 'round_3_att_6_a'
+    - 'round_3_att_6_b'
     - 'round_4_att_1_a'
     - 'round_4_att_1_b'
     - 'round_4_att_2_a'
@@ -42,6 +48,8 @@ variables:
     - 'round_4_att_4_b'
     - 'round_4_att_5_a'
     - 'round_4_att_5_b'
+    - 'round_4_att_6_a'
+    - 'round_4_att_6_b'
     - 'round_5_att_1_a'
     - 'round_5_att_1_b'
     - 'round_5_att_2_a'
@@ -52,6 +60,8 @@ variables:
     - 'round_5_att_4_b'
     - 'round_5_att_5_a'
     - 'round_5_att_5_b'
+    - 'round_5_att_6_a'
+    - 'round_5_att_6_b'
     - 'round_6_att_1_a'
     - 'round_6_att_1_b'
     - 'round_6_att_2_a'
@@ -62,6 +72,8 @@ variables:
     - 'round_6_att_4_b'
     - 'round_6_att_5_a'
     - 'round_6_att_5_b'
+    - 'round_6_att_6_a'
+    - 'round_6_att_6_b'
   utility:
     type : 'numerical'
     names:
@@ -87,9 +99,12 @@ variables:
     - 'choice_set_5'
     - 'choice_set_6'
   treatment:
-    type: 'numerical'
+    type: 'categorical'
     names:
     - 'treatment_status'
-names:
-  attributes:
-  - 
+  trust:
+    type: 'categorical'
+    names:
+    - 'trust_in_government_1'
+    - 'trust_in_government_2'
+    - 'trust_in_government_3'

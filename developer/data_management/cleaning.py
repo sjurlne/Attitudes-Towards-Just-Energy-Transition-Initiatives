@@ -21,8 +21,16 @@ def clean_data(df, specs, renaming_specs):
     
     df = df.replace(renaming_specs['utility'])
     df = df.replace(renaming_specs['treatment'])
+    df = df.replace(renaming_specs['trust'])
     for category in list(renaming_specs['attributes'].keys()):
-        df = df.replace(renaming_specs['attributes'][category])
+        if category == 'soc_distributive':
+            columns_to_replace = df.filter(like='att_2').columns
+            
+            # Replace values in selected columns
+            df[columns_to_replace] = df[columns_to_replace].replace(renaming_specs['attributes'][category])
+
+        else:    
+            df = df.replace(renaming_specs['attributes'][category])
 
     # Keep Variables
     variable_specs = specs["variables"]
@@ -50,6 +58,14 @@ def clean_data(df, specs, renaming_specs):
 
     # Add inconsistency indicator
     df = _inconsistency(df)
+    df = _trust_ID(df)
+
+    return df
+
+def _trust_ID(df):
+    df[['trust_in_government_1', 'trust_in_government_2', 'trust_in_government_3']] = df[['trust_in_government_1', 'trust_in_government_2', 'trust_in_government_3']].astype(int)
+    df['trust_average'] = df[['trust_in_government_1', 'trust_in_government_2', 'trust_in_government_3']].mean(axis=1)
+    df['trust_ID'] = df['trust_average'] >= 5
 
     return df
 
@@ -84,6 +100,11 @@ def make_long(df, renaming_specs):
     for round in range(1,7):
         df_temp = df[['ID',
                       'treatment_status',
+                      'trust_in_government_1',
+                      'trust_in_government_2',
+                      'trust_in_government_3',
+                      'trust_average',
+                      'trust_ID',
                       f'round_{round}_att_1_a', 
                       f'round_{round}_att_1_b',
                       f'round_{round}_att_2_a', 
@@ -94,8 +115,8 @@ def make_long(df, renaming_specs):
                       f'round_{round}_att_4_b', 
                       f'round_{round}_att_5_a', 
                       f'round_{round}_att_5_b', 
-#                      f'round_{round}_att_6_a', 
-#                      f'round_{round}_att_6_b',  
+                      f'round_{round}_att_6_a', 
+                      f'round_{round}_att_6_b',  
                       f'choice_set_{round}', 
                       f'likert_{round}_1', 
                       f'likert_{round}_2',
@@ -112,8 +133,8 @@ def make_long(df, renaming_specs):
             f'round_{round}_att_4_b' : renaming_specs["new_names"][7], 
             f'round_{round}_att_5_a' : renaming_specs["new_names"][8], 
             f'round_{round}_att_5_b' : renaming_specs["new_names"][9], 
-#            f'round_{round}_att_6_a' : renaming_specs["new_names"][10], 
-#            f'round_{round}_att_6_b' : renaming_specs["new_names"][11],
+            f'round_{round}_att_6_a' : renaming_specs["new_names"][10], 
+            f'round_{round}_att_6_b' : renaming_specs["new_names"][11], 
             f'choice_set_{round}' : 'choice', 
             f'likert_{round}_1' : 'utility_A',
             f'likert_{round}_2' : 'utility_B',
@@ -140,8 +161,8 @@ def make_dummy(df, renaming_specs):
     return df_with_dummies
 
 def make_ready_for_regression(df_with_dummies):
-    A_columns = [c for c in list(df_with_dummies.columns) if "_A" in c] + ["inconsistent", "treatment_status"]
-    B_columns = [c for c in list(df_with_dummies.columns) if "_B" in c] + ["inconsistent", "treatment_status"]
+    A_columns = [c for c in list(df_with_dummies.columns) if "_A" in c] + ["inconsistent", "treatment_status", "trust_ID"]
+    B_columns = [c for c in list(df_with_dummies.columns) if "_B" in c] + ["inconsistent", "treatment_status", "trust_ID"]
     new_columns = [col.replace( '_A', '') for col in A_columns]
 
     df_A = df_with_dummies[A_columns].copy()
@@ -151,13 +172,47 @@ def make_ready_for_regression(df_with_dummies):
     df_B.columns = new_columns
     df_B["package"] = "B"
     total = pd.concat([df_A, df_B])
+    
+    total = total.reset_index()
+    total = total.set_index(['ID', 'round', 'package'])
+
+    total = _set_support_dummy(total)
+    total = standardize(total, 'utility')
 
     return total
+
+def make_long_descriptive(df):
+    df = df.copy()
+    A_columns = [c for c in list(df.columns) if "_A" in c]
+    B_columns = [c for c in list(df.columns) if "_A" in c]
+    new_columns = [col.replace( '_A', '') for col in A_columns]
+
+    df_A = df[A_columns].copy()
+    df_A.columns = new_columns
+    df_A["package"] = "A"
+    df_B = df[B_columns].copy()
+    df_B.columns = new_columns
+    df_B["package"] = "B"
+    df = pd.concat([df_A, df_B])
+
+    df = df.reset_index()
+    df = df.set_index(['ID', 'round', 'package'])
+
+    df = _set_support_dummy(df)
+
+    return df
+
+def _set_support_dummy(df):
+
+    df['support'] = df['utility'] >= 5
+    df['unsupport'] = df['utility'] <= 3
+
+    return df
 
 def frequencies(conjoint_reg):
     
     frequency_table =  {}
-    groups = ['att_1', 'att_2','att_3', 'att_4', 'att_5'] #add 6
+    groups = ['att_1', 'att_2','att_3', 'att_4', 'att_5', 'att_6'] #add 6
     for group in groups:
         total = sum(dict(conjoint_reg.filter(like=group).sum()).values())
         frequency_table[group] = {key.replace(f'{group}_', '') : (value / total).round(2) for key, value in dict(conjoint_reg.filter(like=group).sum()).items()}
@@ -168,6 +223,6 @@ def frequencies(conjoint_reg):
     return frequency_table
 
 def standardize(df, column):
-    df[column] = (df[column] - df[column].mean()) / df[column].std()
+    df[f'{column}_standardized'] = (df[column] - df[column].mean()) / df[column].std()
 
     return df
