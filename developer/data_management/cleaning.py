@@ -22,6 +22,7 @@ def clean_data(df, specs, renaming_specs):
     df = df.replace(renaming_specs['utility'])
     df = df.replace(renaming_specs['treatment'])
     df = df.replace(renaming_specs['trust'])
+    df = df.replace(renaming_specs['locationFilter'])
     for category in list(renaming_specs['attributes'].keys()):
         if category == 'soc_distributive':
             columns_to_replace = df.filter(like='att_2').columns
@@ -59,6 +60,7 @@ def clean_data(df, specs, renaming_specs):
     # Add inconsistency indicator
     df = _inconsistency(df)
     df = _trust_ID(df)
+    df = _coal_region(df)
 
     return df
 
@@ -78,6 +80,11 @@ def _inconsistency(df):
     
         df[f'inconsistency_{round}'] = ((df[f'likert_choice_{round}_A'] == 0) & (df[f'choice_set_{round}'] == 'A')) | ((df[f'likert_choice_{round}_B'] == 0) & (df[f'choice_set_{round}'] == 'B'))
     
+    return df
+
+def _coal_region(df):
+    df['coal_region'] = (df['locationFilter'] == 1).astype(int)
+
     return df
 
 def make_long(df, renaming_specs):
@@ -105,6 +112,7 @@ def make_long(df, renaming_specs):
                       'trust_in_government_3',
                       'trust_average',
                       'trust_ID',
+                      'coal_region',
                       f'round_{round}_att_1_a', 
                       f'round_{round}_att_1_b',
                       f'round_{round}_att_2_a', 
@@ -161,8 +169,8 @@ def make_dummy(df, renaming_specs):
     return df_with_dummies
 
 def make_ready_for_regression(df_with_dummies):
-    A_columns = [c for c in list(df_with_dummies.columns) if "_A" in c] + ["inconsistent", "treatment_status", "trust_ID"]
-    B_columns = [c for c in list(df_with_dummies.columns) if "_B" in c] + ["inconsistent", "treatment_status", "trust_ID"]
+    A_columns = [c for c in list(df_with_dummies.columns) if "_A" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_region"]
+    B_columns = [c for c in list(df_with_dummies.columns) if "_B" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_region"]
     new_columns = [col.replace( '_A', '') for col in A_columns]
 
     df_A = df_with_dummies[A_columns].copy()
@@ -183,8 +191,8 @@ def make_ready_for_regression(df_with_dummies):
 
 def make_long_descriptive(df):
     df = df.copy()
-    A_columns = [c for c in list(df.columns) if "_A" in c]
-    B_columns = [c for c in list(df.columns) if "_A" in c]
+    A_columns = [c for c in list(df.columns) if "_A" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_region"]
+    B_columns = [c for c in list(df.columns) if "_A" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_region"]
     new_columns = [col.replace( '_A', '') for col in A_columns]
 
     df_A = df[A_columns].copy()

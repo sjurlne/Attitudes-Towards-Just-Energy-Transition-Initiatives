@@ -108,3 +108,8 @@ variables:
     - 'trust_in_government_1'
     - 'trust_in_government_2'
     - 'trust_in_government_3'
+  region:
+    type: 'categorical'
+    names:
+    - 'locationFilter'
+    - 'district'

@@ -39,7 +39,7 @@ colors:
   - 'red' #att_5
   - 'blue' #att_4
   - 'green' #att_3
-  - 'orange' #att_2
+  - '#F08000' #att_2
   - 'purple' #att_1
 
 colors_control:

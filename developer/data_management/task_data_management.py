@@ -39,9 +39,6 @@ def task_clean_data_python(produces, raw_files=RAW_FILES,):
     data = make_long_descriptive(data)
 
     data_freq = frequencies(data_regression)
-
-
-    
     
     data.to_csv(produces["clean"], index=True)
     data_regression.to_csv(produces["regression"], index=True)

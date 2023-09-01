@@ -4,6 +4,11 @@ import plotly.graph_objects as go
 import plotly.express as px
 import pandas as pd
 
+
+import pandas as pd
+import plotly.express as px
+import plotly.graph_objs as go
+
 def attribute_support(df, attribute):
     df = df.copy()
 
@@ -12,38 +17,51 @@ def attribute_support(df, attribute):
 
     categories = df[attribute].unique()
 
-    support = {"Attribute Level" : [],
-                "Value" : []}
+    support = {"Attribute Level": [], "Value": [], "CI_lower": [], "CI_upper": []}
+    
     for cat in categories[::-1]:
         group = df[df[attribute] == cat]
-        support["Attribute Level"].append(cat.replace('&','<br>'))
-        support["Value"].append(group['support'].mean().round(2))
+        mean = group['support'].mean()
+        std_dev = group['support'].std()
+        n = len(group)
+        confidence_interval = 1.96 * (std_dev / (n**0.5))  # 95% confidence interval
+
+        support["Attribute Level"].append(cat.replace('&', '<br>'))
+        support["Value"].append(mean.round(2))
+        support["CI_lower"].append((mean - confidence_interval).round(2))
+        support["CI_upper"].append((mean + confidence_interval).round(2))
 
     df = pd.DataFrame(support)
 
-
     color_scale = ["rgb(173, 221, 142)", "rgb(127, 188, 65)", "rgb(78, 139, 37)", "rgb(45, 82, 21)"]
 
+    fig = go.Figure()
 
-    fig = px.bar(df, x="Attribute Level", y="Value",
-                title="Values for Different Strategies",
-                labels={"Value": "Share"},
-                width=600, height=500)
-
-    fig.update_traces(marker_color=color_scale)
+    for i, row in df.iterrows():
+        fig.add_trace(go.Bar(
+            x=[row["Attribute Level"]],
+            y=[row["Value"]],
+            error_y=dict(
+                type='data',
+                array=[row["CI_upper"] - row["Value"]],
+                arrayminus=[row["Value"] - row["CI_lower"]],
+                visible=True
+            ),
+            marker_color=color_scale[i],
+            name=row["Attribute Level"]
+        ))
 
     # Set y-axis range from 0 to 1
-    fig.update_layout(yaxis_range=[0, 1])
+    fig.update_layout(yaxis_range=[0, 1], width=600, height=500)
 
     # Add a horizontal line at y=0.5
-    fig.add_trace(go.Scatter(x=["Eliminate<br>UseAllOther", "Reduce<br>IncreaseAllOther"], y=[0.5, 0.5],
-                            mode="lines", showlegend=False, line=dict(color="black", dash="dash")))
+    fig.add_hline(y=0.5, line_dash="dash")
+
 
     fig.update_layout(barmode="group", bargap=0.6, bargroupgap=0.1)
-
     fig.update_layout(
         title={
-            'text': "Fig 1: Support of the different phase out strategies",
+            'text': "Fig 1: Support of the different phase-out strategies",
             'x': 0.5,
             'xanchor': 'center',
             'font': {'family': 'Computer Modern'}
@@ -51,13 +69,12 @@ def attribute_support(df, attribute):
         margin=dict(l=20, r=20, t=45, b=5),
         paper_bgcolor="#EADDCA",
         plot_bgcolor='rgba(0,0,0,0)',
-        showlegend=False,
+        showlegend=False,  # Show legend for different Attribute Levels
         xaxis_showticklabels=True,
         xaxis_title=None,
     )
 
     return fig
-
 
 
 def plot_amce(model, data_info, width=1.0, plot_title="Fig 2: AMCE on support for policy attributes"):
@@ -113,26 +130,25 @@ def plot_amce(model, data_info, width=1.0, plot_title="Fig 2: AMCE on support fo
     fig.update_layout(
         title={
             'text': plot_title,
-            'x': 0.5,
+            'x': 0.0,
             'xanchor': 'center',
             'font': {'family': 'Computer Modern'}
         },
-        xaxis_title='',
+        xaxis_title='AMCE on support (0-1)',
         yaxis_title='Attribute Levels',
         yaxis=dict(categoryorder='array', categoryarray=att_6_levels),  # Set the categoryorder for y-axis based on att_1_levels
-        xaxis=dict(tickformat='.2f', zeroline=False),  # Remove x-axis zeroline
+        xaxis=dict(tickformat='.2f', zeroline=False, range=[-0.5,1.0]),  # Remove x-axis zeroline
         showlegend=True,  # Show legend with attribute names
         margin=dict(l=80, r=30, b=40, t=80),
-        height=600,  # Set the height of the plot to 600 pixels
+        height=800,  # Set the height of the plot to 600 pixels
         width=1000,
-        title_x=0.62,
+        title_x=0.50,
         paper_bgcolor="#EADDCA",
         plot_bgcolor='rgba(0,0,0,0)',
-    )
+    ) 
 
     # Show the interactive error bar plot
     return fig
-
 
 def plot_relative_differences_grouped(model_control, model_treated, data_info, width=1.0, plot_title="Marginal Means Treated / Control"):
 

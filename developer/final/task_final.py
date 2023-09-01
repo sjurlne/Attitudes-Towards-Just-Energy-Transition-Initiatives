@@ -22,19 +22,22 @@ from utilities import read_yaml
         "data_treated" : OUT / "models" / "model_treated.pickle",
         "data_low_trust" : OUT / "models" / "model_low_trust.pickle",
         "data_high_trust" : OUT / "models" / "model_high_trust.pickle",
+        "data_non_coal_region" : OUT / "models" / "model_non_coal_region.pickle",
+        "data_coal_region" : OUT / "models" / "model_coal_region.pickle"
     },
-)
+) 
 @pytask.mark.produces(
     {
-    'support' : OUT / "figures" / "support_plot.png",
-    'total' : OUT / "figures" / "relative_differences.png",
-    'treatment'  : OUT / "figures" / "relative_differences_treatment.png",
-    'trust'  : OUT / "figures" / "relative_differences_trust.png",}
+    'support' : OUT / "figures" / "support_plot_coal_phase_out.png",
+    'total' : OUT / "figures" / "AMCE_on_support.png",
+    'treatment'  : OUT / "figures" / "marginal_means_treatment.png",
+    'trust'  : OUT / "figures" / "marginal_means_trust.png",
+    'coal_region' : OUT / "figures" / "coal_region.png"}
     )
 def task_plot_relative_differences(depends_on, produces):
 
+    # Fig 1
     data_clean = pd.read_csv(depends_on["data_clean"])
-
     fig = attribute_support(data_clean, "att_1")
     fig.write_image(produces['support'])
 
@@ -42,23 +45,28 @@ def task_plot_relative_differences(depends_on, produces):
 
     model = load_model(depends_on["data"])
 
-    #
+    # Fig 2
     fig = plot_amce(model, data_info, width=1.0)
     fig.write_image(produces['total'])
 
     # Grouped by:
     # Treatment
-    #model_control = load_model(depends_on["data_control"])
-    #model_treated = load_model(depends_on["data_treated"])
-    #fig = plot_relative_differences_grouped(model_control, model_treated, data_info, width=1.0)
-    #fig.write_image(produces['treatment'])
+    model_control = load_model(depends_on["data_control"])
+    model_treated = load_model(depends_on["data_treated"])
+    fig = plot_relative_differences_grouped(model_control, model_treated, data_info, width=1.0)
+    fig.write_image(produces['treatment'])
 
     # Trust:
-    #model_low_trust = load_model(depends_on["data_low_trust"])
-    #model_high_trust = load_model(depends_on["data_high_trust"])
-    #fig = fig = plot_relative_differences_grouped(model_control, model_treated, data_info, width=1.0, plot_title="Marginal Means High trust / Low trust")
-    #fig.write_image(produces['trust'])
-    # Justice indicator
+    model_low_trust = load_model(depends_on["data_low_trust"])
+    model_high_trust = load_model(depends_on["data_high_trust"])
+    fig = fig = plot_relative_differences_grouped(model_low_trust, model_high_trust, data_info, width=1.0, plot_title="Marginal Means High trust / Low trust")
+    fig.write_image(produces['trust'])
+    
+    # Coal region
+    model_non_coal_region = load_model(depends_on["data_non_coal_region"])
+    model_coal_region = load_model(depends_on["data_coal_region"])
+    fig = fig = plot_relative_differences_grouped(model_non_coal_region, model_coal_region, data_info, width=1.0, plot_title="Marginal Means non coal / coal region")
+    fig.write_image(produces['coal_region'])
 
 
 """Writing Latex Tables out of estimation Tables!!! 
