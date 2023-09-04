@@ -15,7 +15,7 @@ def attribute_support(df, attribute):
     df = df[[attribute, 'support']]
     df['support'] = df['support'].astype(int)
 
-    categories = df[attribute].unique()
+    categories = ['Eliminate&UseAllOther', 'Eliminate&UseRenewables', 'Reduce&IncreaseAllOther', 'Reduce&IncreaseRenewables']
 
     support = {"Attribute Level": [], "Value": [], "CI_lower": [], "CI_upper": []}
     
@@ -32,10 +32,6 @@ def attribute_support(df, attribute):
         support["CI_upper"].append((mean + confidence_interval).round(2))
 
     df = pd.DataFrame(support)
-
-    new_order = [2, 0, 1, 3]
-
-    df = df.iloc[new_order]
 
     color_scale = ["rgb(173, 221, 142)", "rgb(127, 188, 65)", "rgb(78, 139, 37)", "rgb(45, 82, 21)"]
 
