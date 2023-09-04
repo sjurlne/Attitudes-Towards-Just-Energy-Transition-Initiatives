@@ -16,7 +16,7 @@ from utilities import read_yaml
 @pytask.mark.depends_on(
     {
         "data_info": CODE / "final" / "plot_specs.yaml",
-        "data_clean" : OUT / "data" / "data_clean.csv",
+        "data_long" : OUT / "data" / "data_long.csv",
         "data": OUT / "models" / "model.pickle",
         "data_control" : OUT / "models" / "model_control.pickle",
         "data_treated" : OUT / "models" / "model_treated.pickle",
@@ -37,7 +37,7 @@ from utilities import read_yaml
 def task_plot_relative_differences(depends_on, produces):
 
     # Fig 1
-    data_clean = pd.read_csv(depends_on["data_clean"])
+    data_clean = pd.read_csv(depends_on["data_long"])
     fig = attribute_support(data_clean, "att_1")
     fig.write_image(produces['support'])
 
@@ -53,21 +53,20 @@ def task_plot_relative_differences(depends_on, produces):
     # Treatment
     model_control = load_model(depends_on["data_control"])
     model_treated = load_model(depends_on["data_treated"])
-    fig = plot_relative_differences_grouped(model_control, model_treated, data_info, width=1.0)
+    fig = plot_relative_differences_grouped(model_control, model_treated, data_info, group1="Control", group2="Treatment", width=1.0)
     fig.write_image(produces['treatment'])
 
     # Trust:
     model_low_trust = load_model(depends_on["data_low_trust"])
     model_high_trust = load_model(depends_on["data_high_trust"])
-    fig = fig = plot_relative_differences_grouped(model_low_trust, model_high_trust, data_info, width=1.0, plot_title="Marginal Means High trust / Low trust")
+    fig = plot_relative_differences_grouped(model_low_trust, model_high_trust, data_info, group1="LowTrust", group2="HighTrust", width=1.0, plot_title="Marginal Means High trust / Low trust")
     fig.write_image(produces['trust'])
     
     # Coal region
     model_non_coal_region = load_model(depends_on["data_non_coal_region"])
     model_coal_region = load_model(depends_on["data_coal_region"])
-    fig = fig = plot_relative_differences_grouped(model_non_coal_region, model_coal_region, data_info, width=1.0, plot_title="Marginal Means non coal / coal region")
+    fig = plot_relative_differences_grouped(model_non_coal_region, model_coal_region, data_info, group1="NonCoalRegion", group2="CoalRegion", width=1.0, plot_title="Marginal Means non coal / coal region")
     fig.write_image(produces['coal_region'])
-
 
 """Writing Latex Tables out of estimation Tables!!! 
 Store a table in LaTeX format with the estimation results (Python version)."""
@@ -80,3 +79,9 @@ def task_create_results_table_python(depends_on, produces):
     table = model.summary().as_latex()
     with open(produces, "w") as f:
         f.writelines(table)
+
+
+
+
+
+

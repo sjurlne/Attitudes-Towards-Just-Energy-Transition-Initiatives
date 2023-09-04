@@ -33,6 +33,10 @@ def attribute_support(df, attribute):
 
     df = pd.DataFrame(support)
 
+    new_order = [2, 0, 1, 3]
+
+    df = df.iloc[new_order]
+
     color_scale = ["rgb(173, 221, 142)", "rgb(127, 188, 65)", "rgb(78, 139, 37)", "rgb(45, 82, 21)"]
 
     fig = go.Figure()
@@ -137,7 +141,7 @@ def plot_amce(model, data_info, width=1.0, plot_title="Fig 2: AMCE on support fo
         xaxis_title='AMCE on support (0-1)',
         yaxis_title='Attribute Levels',
         yaxis=dict(categoryorder='array', categoryarray=att_6_levels),  # Set the categoryorder for y-axis based on att_1_levels
-        xaxis=dict(tickformat='.2f', zeroline=False, range=[-0.5,1.0]),  # Remove x-axis zeroline
+        xaxis=dict(tickformat='.2f', zeroline=False, range=[-0.3,0.3]),  # Remove x-axis zeroline
         showlegend=True,  # Show legend with attribute names
         margin=dict(l=80, r=30, b=40, t=80),
         height=800,  # Set the height of the plot to 600 pixels
@@ -150,7 +154,10 @@ def plot_amce(model, data_info, width=1.0, plot_title="Fig 2: AMCE on support fo
     # Show the interactive error bar plot
     return fig
 
-def plot_relative_differences_grouped(model_control, model_treated, data_info, width=1.0, plot_title="Marginal Means Treated / Control"):
+def plot_relative_differences_grouped(model_control, model_treated, data_info, group1, group2, width=1.0, plot_title="Marginal Means Treated / Control"):
+
+    nobs_light = model_control.nobs / 12
+    nobs_dark = model_treated.nobs / 12
 
     order = data_info['order']
     att_1_levels = order['att_1']
@@ -171,22 +178,7 @@ def plot_relative_differences_grouped(model_control, model_treated, data_info, w
 
     # Loop through each attribute group and add the data for 'control' to the plot
     for i, levels in enumerate(att_levels):
-        att_coefficients = [model_control.params[f'att_{6-i}_{level}'] for level in levels]
-        att_standard_errors = [model_control.bse[f'att_{6-i}_{level}'] for level in levels]
 
-        fig.add_trace(go.Scatter(
-            x=att_coefficients,
-            y=levels,
-            mode='markers',
-            error_x=dict(type='data', array=att_standard_errors, color=att_colors_control[i], thickness=1.5),
-            marker=dict(color='darkgray', size=10),
-            orientation='h',
-            showlegend=False,
-            name='Control',  # Add a legend name for the control group
-        ))
-
-    # Loop through each attribute group and add the data for 'treated' to the plot
-    for i, levels in enumerate(att_levels):
         att_coefficients = [model_treated.params[f'att_{6-i}_{level}'] for level in levels]
         att_standard_errors = [model_treated.bse[f'att_{6-i}_{level}'] for level in levels]
 
@@ -199,6 +191,24 @@ def plot_relative_differences_grouped(model_control, model_treated, data_info, w
             orientation='h',
             showlegend=False,
             name='Treated',  # Add a legend name for the treated group
+        ))
+        
+
+    # Loop through each attribute group and add the data for 'treated' to the plot
+    for i, levels in enumerate(att_levels):
+
+        att_coefficients = [model_control.params[f'att_{6-i}_{level}'] for level in levels]
+        att_standard_errors = [model_control.bse[f'att_{6-i}_{level}'] for level in levels]
+
+        fig.add_trace(go.Scatter(
+            x=att_coefficients,
+            y=levels,
+            mode='markers',
+            error_x=dict(type='data', array=att_standard_errors, color=att_colors_control[i], thickness=1.5),
+            marker=dict(color=att_colors_control[i], size=10),
+            orientation='h',
+            showlegend=False,
+            name='Control',  # Add a legend name for the control group
         ))
 
         fig.add_shape(
@@ -215,18 +225,44 @@ def plot_relative_differences_grouped(model_control, model_treated, data_info, w
     # Add a vertical line at x=0 for reference
     fig.add_shape(type="line", x0=0, x1=0, y0=att_6_levels[0], y1=att_1_levels[-1], line=dict(color="gray", width=1, dash='dash'))
 
+    fig.add_annotation(
+                x=-0.02,  # X-coordinate for the annotation (adjust as needed)
+                y=25.0,  # Y-coordinate for the annotation (above the plot)
+                text=f"{group1} (lighter): n={int(nobs_light)}",
+                showarrow=False,
+                font=dict(
+                    family='Computer Modern',
+                    size=13,
+                    ),
+            )
+    fig.add_annotation(
+                x=-0.02,  # X-coordinate for the annotation (adjust as needed)
+                y=26.0,  # Y-coordinate for the annotation (above the plot)
+                text=f"{group2} (darker): n={int(nobs_dark)}",
+                showarrow=False,
+                font=dict(
+                    family='Computer Modern',
+                    size=13,
+                    ),
+            )
+
     # Update the layout of the error bar plot
     fig.update_layout(
-        title=plot_title,
+        title={
+            'text': plot_title,
+            'x': 0.5,
+            'font': {'family': 'Computer Modern'}
+        },
         xaxis_title='',
         yaxis_title='Attribute Levels',
         yaxis=dict(categoryorder='array', categoryarray=att_6_levels),  # Set the categoryorder for y-axis based on att_1_levels
-        xaxis=dict(tickformat='.2f', zeroline=False),  # Remove x-axis zeroline
+        xaxis=dict(tickformat='.2f', zeroline=False, range=[-0.15,0.2]),  # Remove x-axis zeroline
         showlegend=True,  # Show legend with attribute names
         margin=dict(l=80, r=30, b=40, t=80),
         height=600,  # Set the height of the plot to 600 pixels
         width=1000,
-        title_x=0.62,
+        paper_bgcolor="#EADDCA",
+        plot_bgcolor='rgba(0,0,0,0)',
     )
 
     # Show the interactive error bar plot

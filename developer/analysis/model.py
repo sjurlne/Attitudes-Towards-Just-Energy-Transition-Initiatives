@@ -29,7 +29,7 @@ def fit_model_group(data):
     y = data[outcome_name].astype(int)
 
     X = sm.add_constant(X)
-    model = sm.OLS(y, X).fit()#cov_type='cluster', cov_kwds={'groups':X['ID']})
+    model = sm.OLS(y, X).fit(cov_type='cluster', cov_kwds={'groups':X['ID']}) #MIGHT NOT WORK
 
     return model
 

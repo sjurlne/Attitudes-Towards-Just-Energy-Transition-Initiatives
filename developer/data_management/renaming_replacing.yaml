@@ -1,45 +1,44 @@
 utility:
-  Strongly Like : 7
-  Like : 6
-  Somewhat Like : 5
+  Strongly Support : 7
+  Support : 6
+  Somewhat Support : 5
   Neutral : 4
-  Somewhat Dislike : 3
-  Dislike : 2
-  Strongly Dislike : 1
+  Somewhat Unsupport : 3
+  Unsupport : 2
+  Strongly Unsupport : 1
 
 attributes:
   coal:
-    Reduce the use of coal and increase the use of all alternative energy sources : Reduce&IncreaseAllOther
-    Reduce the use of coal and increase the use of renewable energy sources : Reduce&IncreaseRenewables
-    Eliminate coal use and only use alternative energy sources by 2050 : Eliminate&UseAllOther
-    Eliminate coal use and only use renewable energy sources by 2050 : Eliminate&UseRenewables
+    '<strong>Reduce</strong> the use of coal and increase the use of all <strong>alternative energy sources</strong>' : Reduce&IncreaseAllOther
+    '<strong>Reduce</strong> the use of coal and increase the use of <strong>renewable energy sources</strong>' : Reduce&IncreaseRenewables
+    '<strong>Eliminate coal use</strong> and only use <strong>alternative energy sources</strong> by 2050' : Eliminate&UseAllOther
+    '<strong>Eliminate coal use</strong> and only use <strong>renewable energy sources</strong> by 2050' : Eliminate&UseRenewables
   soc_distributive:
-    Implement no additional policy : NothingSoc
-    Ensure that energy prices are low : LowPrices
-    Implement insurance programs for coal workers if they lose their job : InsureWorkers
-    Invest in health and education : HealthEdu
-    Try to expand energy access to all citizens : EnergyAccess
+    'Implement <strong>no additional policy</strong>' : NothingSoc
+    'Ensure that <strong>energy prices are low</strong>' : LowPrices
+    'Implement insurance programs for <strong>coal workers</strong> if they lose their job' : InsureWorkers
+    'Try to expand <strong>energy access</strong> to all citizens' : EnergyAccess
   eco_distributive :
-    Implement no additional policy : NothingEco
-    Facilitate restructuring of coal regions based on identity/history of the area : IdentityCoalRegions
-    Facilitate renewable energy industry within coal regions : IndustryCoalRegions
-    Facilitate training for coal workers to transition to new industries : WorkersCoalRegion
+    'Implement <strong>no additional policy</strong>' : NothingEco
+    'Facilitate <strong>training for coal workers</strong> to transition to new industries' : WorkersCoalRegion
+    'Facilitate <strong>renewable energy industry</strong> within coal regions' : IndustryCoalRegions
+    'Facilitate restructuring of coal regions based on <strong>identity/history of the area</strong>' : IdentityCoalRegions
   procedural:
-    Lead the process alone : GovAlone 
-    Form a commission with different actors especially including local government : Gov&LocalGov
-    Form a commission with different actors especially including civil society groups : Gov&CivilSociety
-    Form a commission with different actors especially including researchers : Gov&Researchers
-    Form a commission with different actors especially including businesses : Gov&Businesses
-    Form a commission with different actors especially including labor unions : Gov&LaborUnions
+    '<strong>Lead the process alone</strong>' : GovAlone 
+    'Form a commission with different actors especially including <strong>local government</strong>' : Gov&LocalGov
+    'Form a commission with different actors especially including <strong>civil society groups</strong>' : Gov&CivilSociety
+    'Form a commission with different actors especially including <strong>researchers</strong>' : Gov&Researchers
+    'Form a commission with different actors especially including <strong>businesses</strong>' : Gov&Businesses
+    'Form a commission with different actors especially including <strong>labor unions</strong>' : Gov&LaborUnions
   restorative_within:
-    Provide India with financial and technical support : Fin&TechSupport
-    Provide India with only financial support : FinSupportOnly
-    Provide India with only technical support : TechSupportOnly
-    Leave financial and technical issues to India : NoInterference
+    'Provide India with <strong>financial and technical support</strong>' : Fin&TechSupport
+    'Provide India with <strong>only financial support</strong>' : FinSupportOnly
+    'Provide India with <strong>only technical support</strong>' : TechSupportOnly
+    '<strong>Leave financial and technical issues to India</strong>' : NoInterference
   restorative_outside:
-    take minor actions to drastically cut their own emissions : MinorEfforts
-    take moderate actions to drastically cut their own emissions : ModerateEfforts
-    take significant actions to drastically cut their own emissions : SignificantEffort
+    'take actions to <strong>drastically cut</strong> their own emissions' : SignificantEffort
+    'take actions to <strong>moderately cut</strong> their own emissions' : ModerateEfforts
+    'take actions to <strong>slightly</strong> cut their own emissions' : MinorEfforts
 
 treatment:
   'treated' : 1

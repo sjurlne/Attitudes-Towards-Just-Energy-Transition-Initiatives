@@ -65,8 +65,8 @@ def clean_data(df, specs, renaming_specs):
     return df
 
 def _trust_ID(df):
-    df[['trust_in_government_1', 'trust_in_government_2', 'trust_in_government_3']] = df[['trust_in_government_1', 'trust_in_government_2', 'trust_in_government_3']].astype(int)
-    df['trust_average'] = df[['trust_in_government_1', 'trust_in_government_2', 'trust_in_government_3']].mean(axis=1)
+    df[['trust_in_governement_1', 'trust_in_governement_2', 'trust_in_governement_3']] = df[['trust_in_governement_1', 'trust_in_governement_2', 'trust_in_governement_3']].astype(int)
+    df['trust_average'] = df[['trust_in_governement_1', 'trust_in_governement_2', 'trust_in_governement_3']].mean(axis=1)
     df['trust_ID'] = df['trust_average'] >= 5
 
     return df
@@ -107,9 +107,9 @@ def make_long(df, renaming_specs):
     for round in range(1,7):
         df_temp = df[['ID',
                       'treatment_status',
-                      'trust_in_government_1',
-                      'trust_in_government_2',
-                      'trust_in_government_3',
+                      'trust_in_governement_1',
+                      'trust_in_governement_2',
+                      'trust_in_governement_3',
                       'trust_average',
                       'trust_ID',
                       'coal_region',

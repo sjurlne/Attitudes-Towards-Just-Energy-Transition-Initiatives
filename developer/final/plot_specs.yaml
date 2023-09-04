@@ -9,7 +9,6 @@ order:
   att_2:
     - LowPrices
     - InsureWorkers
-    - HealthEdu
     - EnergyAccess
     - NothingSoc
   att_3:
@@ -43,17 +42,17 @@ colors:
   - 'purple' #att_1
 
 colors_control:
-  - '#708090' #att_6
+  - '#7ec293' #att_6
   - '#990000' #att_5
   - '#0066CC' #att_4
-  - '#00CC66' #att_3
+  - '#a33c67' #att_3
   - '#CC6600' #att_2
   - '#7F00FF' #att_1
 
 colors_treated:
-  - '#8A9A5B' #att_6
+  - '#2b7543' #att_6
   - '#FF6666' #att_5
   - '#66B2FF' #att_4
-  - '#66FFB2' #att_3
+  - '#c27e9a' #att_3
   - '#FFB266' #att_2
   - '#CC99FF' #att_1
