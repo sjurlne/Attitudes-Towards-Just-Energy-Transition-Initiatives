@@ -117,3 +117,7 @@ variables:
     type: 'numerical'
     names:
     - 'Duration (in seconds)'
+  potentially_unengaged:
+    type: 'numerical'
+    names:
+    - 'potentially_unengaged'
