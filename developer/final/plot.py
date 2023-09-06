@@ -15,7 +15,7 @@ def attribute_support(df, attribute):
     df = df[[attribute, 'support']]
     df['support'] = df['support'].astype(int)
 
-    categories = ['Eliminate&UseAllOther', 'Eliminate&UseRenewables', 'Reduce&IncreaseAllOther', 'Reduce&IncreaseRenewables']
+    categories = ['Eliminate2070', 'Eliminate2050', 'Reduce2030']
 
     support = {"Attribute Level": [], "Value": [], "CI_lower": [], "CI_upper": []}
     
@@ -85,9 +85,8 @@ def plot_amce(model, data_info, width=1.0, plot_title="Fig 2: AMCE on support fo
     att_3_levels = order['att_3']
     att_4_levels = order['att_4']
     att_5_levels = order['att_5']
-    att_6_levels = order['att_6']
 
-    att_levels = [att_6_levels, att_5_levels, att_4_levels, att_3_levels, att_2_levels, att_1_levels]
+    att_levels = [att_5_levels, att_4_levels, att_3_levels, att_2_levels, att_1_levels]
 
     att_colors = data_info['colors']
 
@@ -97,8 +96,8 @@ def plot_amce(model, data_info, width=1.0, plot_title="Fig 2: AMCE on support fo
 
     # Loop through each attribute group and add the data to the plot
     for i, levels in enumerate(att_levels):
-        att_coefficients = [model.params[f'att_{6-i}_{level}'] for level in levels]
-        att_standard_errors = [model.bse[f'att_{6-i}_{level}'] for level in levels]
+        att_coefficients = [model.params[f'att_{5-i}_{level}'] for level in levels]
+        att_standard_errors = [model.bse[f'att_{5-i}_{level}']*1.97 for level in levels]
 
         relative_differences = [coeff - att_coefficients[-1] for coeff in att_coefficients]
 
@@ -124,7 +123,7 @@ def plot_amce(model, data_info, width=1.0, plot_title="Fig 2: AMCE on support fo
         )
 
     # Add a vertical line at x=0 for reference
-    fig.add_shape(type="line", x0=0, x1=0, y0=att_6_levels[0], y1=att_1_levels[-1], line=dict(color="gray", width=1, dash='dash'))
+    fig.add_shape(type="line", x0=0, x1=0, y0=att_5_levels[0], y1=att_1_levels[-1], line=dict(color="gray", width=1, dash='dash'))
 
     # Update the layout of the error bar plot
     fig.update_layout(
@@ -136,7 +135,7 @@ def plot_amce(model, data_info, width=1.0, plot_title="Fig 2: AMCE on support fo
         },
         xaxis_title='AMCE on support (0-1)',
         yaxis_title='Attribute Levels',
-        yaxis=dict(categoryorder='array', categoryarray=att_6_levels),  # Set the categoryorder for y-axis based on att_1_levels
+        yaxis=dict(categoryorder='array', categoryarray=att_5_levels),  # Set the categoryorder for y-axis based on att_1_levels
         xaxis=dict(tickformat='.2f', zeroline=False, range=[-0.3,0.3]),  # Remove x-axis zeroline
         showlegend=True,  # Show legend with attribute names
         margin=dict(l=80, r=30, b=40, t=80),
@@ -150,7 +149,7 @@ def plot_amce(model, data_info, width=1.0, plot_title="Fig 2: AMCE on support fo
     # Show the interactive error bar plot
     return fig
 
-def plot_relative_differences_grouped(model_control, model_treated, data_info, group1, group2, width=1.0, plot_title="Marginal Means Treated / Control"):
+def plot_relative_differences_grouped(model_control, model_treated, data_info, group1, group2, width=1.0, plot_title="Marginal Probabilities Treated / Control"):
 
     nobs_light = model_control.nobs / 12
     nobs_dark = model_treated.nobs / 12
@@ -161,9 +160,8 @@ def plot_relative_differences_grouped(model_control, model_treated, data_info, g
     att_3_levels = order['att_3']
     att_4_levels = order['att_4']
     att_5_levels = order['att_5']
-    att_6_levels = order['att_6']
 
-    att_levels = [att_6_levels, att_5_levels, att_4_levels, att_3_levels, att_2_levels, att_1_levels]
+    att_levels = [att_5_levels, att_4_levels, att_3_levels, att_2_levels, att_1_levels]
 
     att_colors_control = data_info['colors_control']
     att_colors_treated = data_info['colors_treated']
@@ -175,8 +173,8 @@ def plot_relative_differences_grouped(model_control, model_treated, data_info, g
     # Loop through each attribute group and add the data for 'control' to the plot
     for i, levels in enumerate(att_levels):
 
-        att_coefficients = [model_treated.params[f'att_{6-i}_{level}'] for level in levels]
-        att_standard_errors = [model_treated.bse[f'att_{6-i}_{level}'] for level in levels]
+        att_coefficients = [model_treated.params[f'att_{5-i}_{level}'] for level in levels]
+        att_standard_errors = [model_treated.bse[f'att_{5-i}_{level}']*1.97 for level in levels]
 
         fig.add_trace(go.Scatter(
             x=att_coefficients,
@@ -193,8 +191,8 @@ def plot_relative_differences_grouped(model_control, model_treated, data_info, g
     # Loop through each attribute group and add the data for 'treated' to the plot
     for i, levels in enumerate(att_levels):
 
-        att_coefficients = [model_control.params[f'att_{6-i}_{level}'] for level in levels]
-        att_standard_errors = [model_control.bse[f'att_{6-i}_{level}'] for level in levels]
+        att_coefficients = [model_control.params[f'att_{5-i}_{level}'] for level in levels]
+        att_standard_errors = [model_control.bse[f'att_{5-i}_{level}']*1.97  for level in levels]
 
         fig.add_trace(go.Scatter(
             x=att_coefficients,
@@ -219,7 +217,7 @@ def plot_relative_differences_grouped(model_control, model_treated, data_info, g
         )
 
     # Add a vertical line at x=0 for reference
-    fig.add_shape(type="line", x0=0, x1=0, y0=att_6_levels[0], y1=att_1_levels[-1], line=dict(color="gray", width=1, dash='dash'))
+    fig.add_shape(type="line", x0=0, x1=0, y0=att_5_levels[0], y1=att_1_levels[-1], line=dict(color="gray", width=1, dash='dash'))
 
     fig.add_annotation(
                 x=-0.02,  # X-coordinate for the annotation (adjust as needed)
@@ -251,7 +249,7 @@ def plot_relative_differences_grouped(model_control, model_treated, data_info, g
         },
         xaxis_title='',
         yaxis_title='Attribute Levels',
-        yaxis=dict(categoryorder='array', categoryarray=att_6_levels),  # Set the categoryorder for y-axis based on att_1_levels
+        yaxis=dict(categoryorder='array', categoryarray=att_5_levels),  # Set the categoryorder for y-axis based on att_1_levels
         xaxis=dict(tickformat='.2f', zeroline=False, range=[-0.15,0.2]),  # Remove x-axis zeroline
         showlegend=True,  # Show legend with attribute names
         margin=dict(l=80, r=30, b=40, t=80),

@@ -123,8 +123,6 @@ def make_long(df, renaming_specs):
                       f'round_{round}_att_4_b', 
                       f'round_{round}_att_5_a', 
                       f'round_{round}_att_5_b', 
-                      f'round_{round}_att_6_a', 
-                      f'round_{round}_att_6_b',  
                       f'choice_set_{round}', 
                       f'likert_{round}_1', 
                       f'likert_{round}_2',
@@ -141,8 +139,6 @@ def make_long(df, renaming_specs):
             f'round_{round}_att_4_b' : renaming_specs["new_names"][7], 
             f'round_{round}_att_5_a' : renaming_specs["new_names"][8], 
             f'round_{round}_att_5_b' : renaming_specs["new_names"][9], 
-            f'round_{round}_att_6_a' : renaming_specs["new_names"][10], 
-            f'round_{round}_att_6_b' : renaming_specs["new_names"][11], 
             f'choice_set_{round}' : 'choice', 
             f'likert_{round}_1' : 'utility_A',
             f'likert_{round}_2' : 'utility_B',
@@ -220,7 +216,7 @@ def _set_support_dummy(df):
 def frequencies(conjoint_reg):
     
     frequency_table =  {}
-    groups = ['att_1', 'att_2','att_3', 'att_4', 'att_5', 'att_6'] #add 6
+    groups = ['att_1', 'att_2','att_3', 'att_4', 'att_5']
     for group in groups:
         total = sum(dict(conjoint_reg.filter(like=group).sum()).values())
         frequency_table[group] = {key.replace(f'{group}_', '') : (value / total).round(2) for key, value in dict(conjoint_reg.filter(like=group).sum()).items()}

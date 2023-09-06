@@ -2,10 +2,9 @@
 order:
   #Bottom means higher in the plot.
   att_1:
-    - 'Eliminate&UseRenewables'
-    - 'Eliminate&UseAllOther'
-    - 'Reduce&IncreaseRenewables'
-    - 'Reduce&IncreaseAllOther'
+    - Eliminate2070
+    - Eliminate2050
+    - Reduce2030
   att_2:
     - LowPrices
     - InsureWorkers
@@ -28,13 +27,8 @@ order:
     - FinSupportOnly
     - TechSupportOnly
     - NoInterference
-  att_6:
-    - SignificantEffort
-    - ModerateEfforts
-    - MinorEfforts
 
 colors:
-  - 'grey' #att_6
   - 'red' #att_5
   - 'blue' #att_4
   - 'green' #att_3
@@ -42,7 +36,6 @@ colors:
   - 'purple' #att_1
 
 colors_control:
-  - '#7ec293' #att_6
   - '#990000' #att_5
   - '#0066CC' #att_4
   - '#a33c67' #att_3
@@ -50,7 +43,6 @@ colors_control:
   - '#7F00FF' #att_1
 
 colors_treated:
-  - '#2b7543' #att_6
   - '#FF6666' #att_5
   - '#66B2FF' #att_4
   - '#c27e9a' #att_3

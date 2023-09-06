@@ -9,10 +9,9 @@ utility:
 
 attributes:
   coal:
-    '<strong>Reduce</strong> the use of coal and increase the use of all <strong>alternative energy sources</strong>' : Reduce&IncreaseAllOther
-    '<strong>Reduce</strong> the use of coal and increase the use of <strong>renewable energy sources</strong>' : Reduce&IncreaseRenewables
-    '<strong>Eliminate coal use</strong> and only use <strong>alternative energy sources</strong> by 2050' : Eliminate&UseAllOther
-    '<strong>Eliminate coal use</strong> and only use <strong>renewable energy sources</strong> by 2050' : Eliminate&UseRenewables
+    '<strong>Reduce coal use</strong> and increase the use of alternative energy/electricity sources <strong>by 2030</strong>' : Reduce2030
+    '<strong>Eliminate coal use</strong> and only use alternative energy/electricity sources <strong>by 2050</strong>' : Eliminate2050
+    '<strong>Eliminate coal use</strong> and only use alternative energy/electricity sources <strong>by 2070</strong>' : Eliminate2070
   soc_distributive:
     'Implement <strong>no additional policy</strong>' : NothingSoc
     'Ensure that <strong>energy prices are low</strong>' : LowPrices
@@ -35,10 +34,6 @@ attributes:
     'Provide India with <strong>only financial support</strong>' : FinSupportOnly
     'Provide India with <strong>only technical support</strong>' : TechSupportOnly
     '<strong>Leave financial and technical issues to India</strong>' : NoInterference
-  restorative_outside:
-    'take actions to <strong>drastically cut</strong> their own emissions' : SignificantEffort
-    'take actions to <strong>moderately cut</strong> their own emissions' : ModerateEfforts
-    'take actions to <strong>slightly</strong> cut their own emissions' : MinorEfforts
 
 treatment:
   'treated' : 1
@@ -64,8 +59,6 @@ new_names:
   - 'att_4_B'
   - 'att_5_A'
   - 'att_5_B'
-  - 'att_6_A'
-  - 'att_6_B'
   
 locationFilter:
   'Odisha' : 1

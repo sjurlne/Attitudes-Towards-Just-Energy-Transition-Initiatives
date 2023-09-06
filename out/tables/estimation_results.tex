@@ -1,54 +1,50 @@
 \begin{center}
 \begin{tabular}{lclc}
 \toprule
-\textbf{Dep. Variable:}                     &     support      & \textbf{  R-squared:         } &     0.034   \\
-\textbf{Model:}                             &       OLS        & \textbf{  Adj. R-squared:    } &     0.022   \\
-\textbf{Method:}                            &  Least Squares   & \textbf{  F-statistic:       } &     81.91   \\
-\textbf{Date:}                              & Tue, 05 Sep 2023 & \textbf{  Prob (F-statistic):} &  6.70e-67   \\
-\textbf{Time:}                              &     12:02:37     & \textbf{  Log-Likelihood:    } &   -960.77   \\
-\textbf{No. Observations:}                  &        1656      & \textbf{  AIC:               } &     1964.   \\
-\textbf{Df Residuals:}                      &        1635      & \textbf{  BIC:               } &     2077.   \\
-\textbf{Df Model:}                          &          20      & \textbf{                     } &             \\
-\textbf{Covariance Type:}                   &     cluster      & \textbf{                     } &             \\
+\textbf{Dep. Variable:}              &     support      & \textbf{  R-squared:         } &     0.022   \\
+\textbf{Model:}                      &       OLS        & \textbf{  Adj. R-squared:    } &     0.019   \\
+\textbf{Method:}                     &  Least Squares   & \textbf{  F-statistic:       } &     226.0   \\
+\textbf{Date:}                       & Wed, 06 Sep 2023 & \textbf{  Prob (F-statistic):} & 1.71e-255   \\
+\textbf{Time:}                       &     15:10:37     & \textbf{  Log-Likelihood:    } &   -4779.0   \\
+\textbf{No. Observations:}           &        7320      & \textbf{  AIC:               } &     9594.   \\
+\textbf{Df Residuals:}               &        7302      & \textbf{  BIC:               } &     9718.   \\
+\textbf{Df Model:}                   &          17      & \textbf{                     } &             \\
+\textbf{Covariance Type:}            &     cluster      & \textbf{                     } &             \\
 \bottomrule
 \end{tabular}
 \begin{tabular}{lcccccc}
-                                            & \textbf{coef} & \textbf{std err} & \textbf{z} & \textbf{P$> |$z$|$} & \textbf{[0.025} & \textbf{0.975]}  \\
+                                     & \textbf{coef} & \textbf{std err} & \textbf{z} & \textbf{P$> |$z$|$} & \textbf{[0.025} & \textbf{0.975]}  \\
 \midrule
-\textbf{const}                              &       0.3012  &        0.017     &    18.041  &         0.000        &        0.268    &        0.334     \\
-\textbf{att\_1\_Eliminate\&UseAllOther}     &       0.0508  &        0.020     &     2.600  &         0.009        &        0.012    &        0.089     \\
-\textbf{att\_1\_Eliminate\&UseRenewables}   &       0.0979  &        0.018     &     5.332  &         0.000        &        0.062    &        0.134     \\
-\textbf{att\_1\_Reduce\&IncreaseAllOther}   &       0.0869  &        0.018     &     4.965  &         0.000        &        0.053    &        0.121     \\
-\textbf{att\_1\_Reduce\&IncreaseRenewables} &       0.0656  &        0.021     &     3.185  &         0.001        &        0.025    &        0.106     \\
-\textbf{att\_2\_EnergyAccess}               &       0.0955  &        0.019     &     4.967  &         0.000        &        0.058    &        0.133     \\
-\textbf{att\_2\_InsureWorkers}              &       0.1095  &        0.022     &     5.091  &         0.000        &        0.067    &        0.152     \\
-\textbf{att\_2\_LowPrices}                  &       0.1058  &        0.017     &     6.118  &         0.000        &        0.072    &        0.140     \\
-\textbf{att\_2\_NothingSoc}                 &      -0.0096  &        0.021     &    -0.456  &         0.648        &       -0.051    &        0.032     \\
-\textbf{att\_3\_IdentityCoalRegions}        &       0.0845  &        0.015     &     5.454  &         0.000        &        0.054    &        0.115     \\
-\textbf{att\_3\_IndustryCoalRegions}        &       0.0892  &        0.017     &     5.222  &         0.000        &        0.056    &        0.123     \\
-\textbf{att\_3\_NothingEco}                 &       0.0075  &        0.021     &     0.352  &         0.725        &       -0.035    &        0.050     \\
-\textbf{att\_3\_WorkersCoalRegion}          &       0.1199  &        0.019     &     6.193  &         0.000        &        0.082    &        0.158     \\
-\textbf{att\_4\_Gov\&Businesses}            &       0.0489  &        0.023     &     2.092  &         0.036        &        0.003    &        0.095     \\
-\textbf{att\_4\_Gov\&CivilSociety}          &       0.0562  &        0.029     &     1.923  &         0.054        &       -0.001    &        0.113     \\
-\textbf{att\_4\_Gov\&LaborUnions}           &       0.0895  &        0.024     &     3.769  &         0.000        &        0.043    &        0.136     \\
-\textbf{att\_4\_Gov\&LocalGov}              &       0.0423  &        0.023     &     1.807  &         0.071        &       -0.004    &        0.088     \\
-\textbf{att\_4\_Gov\&Researchers}           &       0.0492  &        0.024     &     2.028  &         0.043        &        0.002    &        0.097     \\
-\textbf{att\_4\_GovAlone}                   &       0.0151  &        0.025     &     0.596  &         0.551        &       -0.035    &        0.065     \\
-\textbf{att\_5\_Fin\&TechSupport}           &       0.1039  &        0.018     &     5.674  &         0.000        &        0.068    &        0.140     \\
-\textbf{att\_5\_FinSupportOnly}             &       0.0424  &        0.022     &     1.969  &         0.049        &        0.000    &        0.085     \\
-\textbf{att\_5\_NoInterference}             &       0.0297  &        0.022     &     1.333  &         0.182        &       -0.014    &        0.073     \\
-\textbf{att\_5\_TechSupportOnly}            &       0.1252  &        0.017     &     7.399  &         0.000        &        0.092    &        0.158     \\
-\textbf{att\_6\_MinorEfforts}               &       0.1033  &        0.016     &     6.359  &         0.000        &        0.071    &        0.135     \\
-\textbf{att\_6\_ModerateEfforts}            &       0.1074  &        0.015     &     7.373  &         0.000        &        0.079    &        0.136     \\
-\textbf{att\_6\_SignificantEffort}          &       0.0904  &        0.016     &     5.624  &         0.000        &        0.059    &        0.122     \\
-\textbf{ID}                                 &      -0.0002  &        0.001     &    -0.410  &         0.682        &       -0.001    &        0.001     \\
+\textbf{const}                       &       0.2901  &        0.010     &    29.457  &         0.000        &        0.271    &        0.309     \\
+\textbf{att\_1\_Eliminate2050}       &       0.1073  &        0.009     &    12.257  &         0.000        &        0.090    &        0.124     \\
+\textbf{att\_1\_Eliminate2070}       &       0.0580  &        0.009     &     6.108  &         0.000        &        0.039    &        0.077     \\
+\textbf{att\_1\_Reduce2030}          &       0.1248  &        0.009     &    13.599  &         0.000        &        0.107    &        0.143     \\
+\textbf{att\_2\_EnergyAccess}        &       0.0810  &        0.010     &     8.296  &         0.000        &        0.062    &        0.100     \\
+\textbf{att\_2\_InsureWorkers}       &       0.0985  &        0.009     &    10.443  &         0.000        &        0.080    &        0.117     \\
+\textbf{att\_2\_LowPrices}           &       0.0962  &        0.010     &    10.062  &         0.000        &        0.077    &        0.115     \\
+\textbf{att\_2\_NothingSoc}          &       0.0144  &        0.010     &     1.454  &         0.146        &       -0.005    &        0.034     \\
+\textbf{att\_3\_IdentityCoalRegions} &       0.0711  &        0.010     &     6.872  &         0.000        &        0.051    &        0.091     \\
+\textbf{att\_3\_IndustryCoalRegions} &       0.0965  &        0.010     &     9.882  &         0.000        &        0.077    &        0.116     \\
+\textbf{att\_3\_NothingEco}          &       0.0252  &        0.011     &     2.309  &         0.021        &        0.004    &        0.047     \\
+\textbf{att\_3\_WorkersCoalRegion}   &       0.0973  &        0.010     &     9.576  &         0.000        &        0.077    &        0.117     \\
+\textbf{att\_4\_Gov\&Businesses}     &       0.0267  &        0.012     &     2.212  &         0.027        &        0.003    &        0.050     \\
+\textbf{att\_4\_Gov\&CivilSociety}   &       0.0688  &        0.013     &     5.278  &         0.000        &        0.043    &        0.094     \\
+\textbf{att\_4\_Gov\&LaborUnions}    &       0.0516  &        0.012     &     4.193  &         0.000        &        0.027    &        0.076     \\
+\textbf{att\_4\_Gov\&LocalGov}       &       0.0626  &        0.013     &     4.976  &         0.000        &        0.038    &        0.087     \\
+\textbf{att\_4\_Gov\&Researchers}    &       0.0726  &        0.012     &     5.878  &         0.000        &        0.048    &        0.097     \\
+\textbf{att\_4\_GovAlone}            &       0.0078  &        0.013     &     0.599  &         0.549        &       -0.018    &        0.033     \\
+\textbf{att\_5\_Fin\&TechSupport}    &       0.1293  &        0.010     &    13.064  &         0.000        &        0.110    &        0.149     \\
+\textbf{att\_5\_FinSupportOnly}      &       0.0653  &        0.010     &     6.421  &         0.000        &        0.045    &        0.085     \\
+\textbf{att\_5\_NoInterference}      &       0.0394  &        0.011     &     3.642  &         0.000        &        0.018    &        0.061     \\
+\textbf{att\_5\_TechSupportOnly}     &       0.0561  &        0.010     &     5.499  &         0.000        &        0.036    &        0.076     \\
+\textbf{ID}                          &    6.021e-05  &     5.89e-05     &     1.022  &         0.307        &    -5.52e-05    &        0.000     \\
 \bottomrule
 \end{tabular}
 \begin{tabular}{lclc}
-\textbf{Omnibus:}       & 321.305 & \textbf{  Durbin-Watson:     } &    1.432  \\
-\textbf{Prob(Omnibus):} &   0.000 & \textbf{  Jarque-Bera (JB):  } &  333.440  \\
-\textbf{Skew:}          &  -1.031 & \textbf{  Prob(JB):          } & 3.93e-73  \\
-\textbf{Kurtosis:}      &   2.239 & \textbf{  Cond. No.          } & 2.31e+17  \\
+\textbf{Omnibus:}       & 67622.179 & \textbf{  Durbin-Watson:     } &     1.415  \\
+\textbf{Prob(Omnibus):} &    0.000  & \textbf{  Jarque-Bera (JB):  } &  1208.730  \\
+\textbf{Skew:}          &   -0.704  & \textbf{  Prob(JB):          } & 3.37e-263  \\
+\textbf{Kurtosis:}      &    1.593  & \textbf{  Cond. No.          } &  3.56e+18  \\
 \bottomrule
 \end{tabular}
 %\caption{OLS Regression Results}
@@ -56,5 +52,5 @@
 
 Notes: \newline
  [1] Standard Errors are robust to cluster correlation (cluster) \newline
- [2] The smallest eigenvalue is  2e-28. This might indicate that there are \newline
+ [2] The smallest eigenvalue is 7.17e-29. This might indicate that there are \newline
  strong multicollinearity problems or that the design matrix is singular.

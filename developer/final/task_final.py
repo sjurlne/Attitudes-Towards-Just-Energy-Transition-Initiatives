@@ -30,9 +30,9 @@ from utilities import read_yaml
     {
     'support' : OUT / "figures" / "support_plot_coal_phase_out.png",
     'total' : OUT / "figures" / "AMCE_on_support.png",
-    'treatment'  : OUT / "figures" / "marginal_means_treatment.png",
-    'trust'  : OUT / "figures" / "marginal_means_trust.png",
-    'coal_region' : OUT / "figures" / "coal_region.png"}
+    'treatment'  : OUT / "figures" / "marginal_prob_treatment.png",
+    'trust'  : OUT / "figures" / "marginal_prob_trust.png",
+    'coal_region' : OUT / "figures" / "marginal_prob_coal_region.png"}
     )
 def task_plot_relative_differences(depends_on, produces):
 
@@ -59,13 +59,13 @@ def task_plot_relative_differences(depends_on, produces):
     # Trust:
     model_low_trust = load_model(depends_on["data_low_trust"])
     model_high_trust = load_model(depends_on["data_high_trust"])
-    fig = plot_relative_differences_grouped(model_low_trust, model_high_trust, data_info, group1="LowTrust", group2="HighTrust", width=1.0, plot_title="Marginal Means High trust / Low trust")
+    fig = plot_relative_differences_grouped(model_low_trust, model_high_trust, data_info, group1="LowTrust", group2="HighTrust", width=1.0, plot_title="Marginal Probabilities High trust / Low trust")
     fig.write_image(produces['trust'])
     
     # Coal region
     model_non_coal_region = load_model(depends_on["data_non_coal_region"])
     model_coal_region = load_model(depends_on["data_coal_region"])
-    fig = plot_relative_differences_grouped(model_non_coal_region, model_coal_region, data_info, group1="NonCoalRegion", group2="CoalRegion", width=1.0, plot_title="Marginal Means non coal / coal region")
+    fig = plot_relative_differences_grouped(model_non_coal_region, model_coal_region, data_info, group1="NonCoalRegion", group2="CoalRegion", width=1.0, plot_title="Marginal Probabilities non coal / coal region")
     fig.write_image(produces['coal_region'])
 
 """Writing Latex Tables out of estimation Tables!!! 
@@ -79,6 +79,8 @@ def task_create_results_table_python(depends_on, produces):
     table = model.summary().as_latex()
     with open(produces, "w") as f:
         f.writelines(table)
+
+        
 
         
 
