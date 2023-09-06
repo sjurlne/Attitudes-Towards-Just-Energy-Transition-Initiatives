@@ -48,7 +48,7 @@ def clean_data(df, specs, renaming_specs):
             df[variable_specs[group]["names"]] = df[variable_specs[group]["names"]].astype('category')
 
         elif variable_specs[group]["type"] == 'numerical':
-            df[variable_specs[group]["names"]] = df[variable_specs[group]["names"]].astype('int')
+            df[variable_specs[group]["names"]] = df[variable_specs[group]["names"]].astype('int', errors='ignore')
 
         else:
             continue
