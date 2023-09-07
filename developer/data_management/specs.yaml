@@ -121,4 +121,13 @@ variables:
     - 'q_main_energy_ov'
     - 'q_coal_sub_ov'
     - 'q_elec_sub_ov'
+  demographics_cat:
+    type: 'categorical'
+    names:
+    - 'genderFilter'
+  demographics_num:
+    type: 'numerical'
+    names:
+    - 'ageFilter'
+    
   

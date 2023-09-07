@@ -30,6 +30,8 @@ def clean_data(df, specs, renaming_specs):
     
     df = df.replace(renaming_specs['policy_overview'])
 
+    df['district'] = df['district'].replace(renaming_specs['district'])
+
     df['coal_region'] = df['state']
     df['coal_region'] = df['state'].replace(renaming_specs['coal_region'])
 

@@ -78,6 +78,14 @@ coal_region:
   'Arunachal Pradesh' : 1
   #https://coal.gov.in/en/major-statistics/coal-reserves
 
+district:
+  1 : NorthernZone
+  2 : NorthEasternZone
+  3 : CentralZone
+  4 : EasternZone
+  5 : WesternZone
+  6 : SouthernZone
+
 policy_overview:
   'Yes' : '1'
   'Coal' : '1'

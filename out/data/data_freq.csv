@@ -11,12 +11,12 @@ IndustryCoalRegions,0.26
 NothingEco,0.25
 WorkersCoalRegion,0.25
 Gov&Businesses,0.17
-Gov&CivilSociety,0.17
-Gov&LaborUnions,0.17
+Gov&CivilSociety,0.16
+Gov&LaborUnions,0.16
 Gov&LocalGov,0.17
 Gov&Researchers,0.16
 GovAlone,0.17
 Fin&TechSupport,0.25
 FinSupportOnly,0.25
 NoInterference,0.25
-TechSupportOnly,0.26
+TechSupportOnly,0.25
