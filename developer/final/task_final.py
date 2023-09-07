@@ -23,16 +23,23 @@ from utilities import read_yaml
         "data_low_trust" : OUT / "models" / "model_low_trust.pickle",
         "data_high_trust" : OUT / "models" / "model_high_trust.pickle",
         "data_non_coal_region" : OUT / "models" / "model_non_coal_region.pickle",
-        "data_coal_region" : OUT / "models" / "model_coal_region.pickle"
+        "data_coal_region" : OUT / "models" / "model_coal_region.pickle",
+        "data_low_income" : OUT / "models" / "model_low_income.pickle",
+        "data_high_income" :OUT / "models" / "model_high_income.pickle",
+        "data_not_aware" : OUT / "models" / "model_not_aware.pickle",
+        "data_aware" :OUT / "models" / "model_aware.pickle",
     },
-) 
+    ) 
 @pytask.mark.produces(
     {
     'support' : OUT / "figures" / "support_plot_coal_phase_out.png",
     'total' : OUT / "figures" / "AMCE_on_support.png",
     'treatment'  : OUT / "figures" / "marginal_prob_treatment.png",
     'trust'  : OUT / "figures" / "marginal_prob_trust.png",
-    'coal_region' : OUT / "figures" / "marginal_prob_coal_region.png"}
+    'coal_region' : OUT / "figures" / "marginal_prob_coal_region.png",
+    'income' : OUT / "figures" / "marginal_prob_income.png",
+    'awareness' : OUT / "figures" / "marginal_prob_awareness.png",
+    } 
     )
 def task_plot_relative_differences(depends_on, produces):
 
@@ -67,6 +74,18 @@ def task_plot_relative_differences(depends_on, produces):
     model_coal_region = load_model(depends_on["data_coal_region"])
     fig = plot_relative_differences_grouped(model_non_coal_region, model_coal_region, data_info, group1="NonCoalRegion", group2="CoalRegion", width=1.0, plot_title="Marginal Probabilities non coal / coal region")
     fig.write_image(produces['coal_region'])
+
+    # Income
+    model_low_income = load_model(depends_on["data_low_income"])
+    model_high_income = load_model(depends_on["data_high_income"])
+    fig = plot_relative_differences_grouped(model_low_income, model_high_income, data_info, group1="LowIncome", group2="HighIncome", width=1.0, plot_title="Marginal Probabilities by income")
+    fig.write_image(produces['income'])
+
+    # Awareness
+    model_not_aware = load_model(depends_on["data_not_aware"])
+    model_aware = load_model(depends_on["data_aware"])
+    fig = plot_relative_differences_grouped(model_not_aware, model_aware, data_info, group1="Not Aware", group2="Aware", width=1.0, plot_title="Marginal Probabilities by awareness")
+    fig.write_image(produces['awareness'])
 
 """Writing Latex Tables out of estimation Tables!!! 
 Store a table in LaTeX format with the estimation results (Python version)."""

@@ -99,8 +99,10 @@ variables:
   region:
     type: 'categorical'
     names:
+    - 'state'
     - 'locationFilter'
     - 'district'
+    - 'coal_region'
   duration:
     type: 'numerical'
     names:
@@ -109,3 +111,14 @@ variables:
     type: 'numerical'
     names:
     - 'potentially_unengaged'
+  income_group:
+    type: 'numerical'
+    names:
+    - 'SC0'
+  energy_awareness:
+    type: 'categorical'
+    names:
+    - 'q_main_energy_ov'
+    - 'q_coal_sub_ov'
+    - 'q_elec_sub_ov'
+  

@@ -1,5 +1,11 @@
 """Function(s) for cleaning the data set(s)."""
 import pandas as pd
+import numpy as np
+
+from geopy.geocoders import Nominatim
+from geopy.exc import GeocoderTimedOut
+
+geolocator = Nominatim(user_agent="myGeocoder")
 
 def clean_data(df, specs, renaming_specs):
     """Cleans and preprocesses the input DataFrame according to provided specifications.
@@ -17,12 +23,16 @@ def clean_data(df, specs, renaming_specs):
 
     """
     # Initial Cleaning
-    df = df.drop([0, 1])
     
     df = df.replace(renaming_specs['utility'])
     df = df.replace(renaming_specs['treatment'])
     df = df.replace(renaming_specs['trust'])
-    df = df.replace(renaming_specs['locationFilter'])
+    
+    df = df.replace(renaming_specs['policy_overview'])
+
+    df['coal_region'] = df['state']
+    df['coal_region'] = df['state'].replace(renaming_specs['coal_region'])
+
     for category in list(renaming_specs['attributes'].keys()):
         if category == 'soc_distributive':
             columns_to_replace = df.filter(like='att_2').columns
@@ -45,7 +55,7 @@ def clean_data(df, specs, renaming_specs):
     # Transform types
     for group in groups_of_vars:
         if variable_specs[group]["type"] == 'categorical':
-            df[variable_specs[group]["names"]] = df[variable_specs[group]["names"]].astype('category')
+            df[variable_specs[group]["names"]] = df[variable_specs[group]["names"]].astype('category', errors='ignore')
 
         elif variable_specs[group]["type"] == 'numerical':
             df[variable_specs[group]["names"]] = df[variable_specs[group]["names"]].astype('int', errors='ignore')
@@ -57,17 +67,21 @@ def clean_data(df, specs, renaming_specs):
     df['ID'] = range(1, len(df) + 1)
     #df = df.set_index("ID")
 
-    # Add inconsistency indicator
+    # Add group indicators
     df = _inconsistency(df)
     df = _trust_ID(df)
     df = _coal_region(df)
+    df = _high_income(df)
+    df = _awareness(df)
 
     return df
 
+### GROUP IDS:
+
 def _trust_ID(df):
-    df[['trust_in_governement_1', 'trust_in_governement_2', 'trust_in_governement_3']] = df[['trust_in_governement_1', 'trust_in_governement_2', 'trust_in_governement_3']].astype(int)
-    df['trust_average'] = df[['trust_in_governement_1', 'trust_in_governement_2', 'trust_in_governement_3']].mean(axis=1)
-    df['trust_ID'] = df['trust_average'] >= 5
+    df['trust_average'] = df[['trust_in_governement_1', 'trust_in_governement_2', 'trust_in_governement_3']].astype(int).mean(axis=1)
+    average = df['trust_average'].mean(axis=0)
+    df['trust_ID'] = df['trust_average'] > average
 
     return df
 
@@ -83,8 +97,16 @@ def _inconsistency(df):
     return df
 
 def _coal_region(df):
-    df['coal_region'] = (df['locationFilter'] == 1).astype(int)
+    df['coal_region'] = (df['coal_region'] == 1).astype(int)
+    return df
 
+def _high_income(df):
+    df['high_income'] = (df['SC0'] > 5).astype(int)
+    return df
+
+def _awareness(df):
+    df['aware'] = (df['q_main_energy_ov'] == '1') & (df['q_coal_sub_ov'] == '1') & (df['q_elec_sub_ov'] == '1')
+    df['aware'] = df['aware'].astype(int)
     return df
 
 def make_long(df, renaming_specs):
@@ -113,6 +135,8 @@ def make_long(df, renaming_specs):
                       'trust_average',
                       'trust_ID',
                       'coal_region',
+                      'high_income',
+                      'aware',
                       f'round_{round}_att_1_a', 
                       f'round_{round}_att_1_b',
                       f'round_{round}_att_2_a', 
@@ -165,8 +189,8 @@ def make_dummy(df, renaming_specs):
     return df_with_dummies
 
 def make_ready_for_regression(df_with_dummies):
-    A_columns = [c for c in list(df_with_dummies.columns) if "_A" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_region"]
-    B_columns = [c for c in list(df_with_dummies.columns) if "_B" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_region"]
+    A_columns = [c for c in list(df_with_dummies.columns) if "_A" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_region", "high_income", "aware"]
+    B_columns = [c for c in list(df_with_dummies.columns) if "_B" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_region", "high_income", "aware"]
     new_columns = [col.replace( '_A', '') for col in A_columns]
 
     df_A = df_with_dummies[A_columns].copy()
@@ -187,8 +211,8 @@ def make_ready_for_regression(df_with_dummies):
 
 def make_long_descriptive(df):
     df = df.copy()
-    A_columns = [c for c in list(df.columns) if "_A" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_region"]
-    B_columns = [c for c in list(df.columns) if "_A" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_region"]
+    A_columns = [c for c in list(df.columns) if "_A" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_region", "high_income", "aware"]
+    B_columns = [c for c in list(df.columns) if "_A" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_region", "high_income", "aware"]
     new_columns = [col.replace( '_A', '') for col in A_columns]
 
     df_A = df[A_columns].copy()
