@@ -23,7 +23,7 @@ from utilities import read_yaml
         "long" : OUT / "data" / "data_long.csv",
         "regression" : OUT / "data" / "data_regression.csv",
         "freq" : OUT / "data" / "data_freq.csv",
-    })
+    }) 
 def task_clean_data_python(produces, depends_on):
     """Clean the data"""
     data = pd.read_csv(depends_on["raw_data"], encoding="utf8")
