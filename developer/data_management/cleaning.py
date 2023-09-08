@@ -1,11 +1,10 @@
 """Function(s) for cleaning the data set(s)."""
 import pandas as pd
 import numpy as np
+import math
 
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut
-
-geolocator = Nominatim(user_agent="myGeocoder")
 
 def clean_data(df, specs, renaming_specs):
     """Cleans and preprocesses the input DataFrame according to provided specifications.
@@ -23,6 +22,8 @@ def clean_data(df, specs, renaming_specs):
 
     """
     # Initial Cleaning
+
+    df = coal_prox_indicator(df)
     
     df = df.replace(renaming_specs['utility'])
     df = df.replace(renaming_specs['treatment'])
@@ -83,7 +84,7 @@ def clean_data(df, specs, renaming_specs):
 def _trust_ID(df):
     df['trust_average'] = df[['trust_in_governement_1', 'trust_in_governement_2', 'trust_in_governement_3']].astype(int).mean(axis=1)
     average = df['trust_average'].mean(axis=0)
-    df['trust_ID'] = df['trust_average'] > average
+    df['trust_ID'] = df['trust_average'] > 4#> average
 
     return df
 
@@ -137,6 +138,7 @@ def make_long(df, renaming_specs):
                       'trust_average',
                       'trust_ID',
                       'coal_region',
+                      'coal_prox',
                       'high_income',
                       'aware',
                       f'round_{round}_att_1_a', 
@@ -191,8 +193,8 @@ def make_dummy(df, renaming_specs):
     return df_with_dummies
 
 def make_ready_for_regression(df_with_dummies):
-    A_columns = [c for c in list(df_with_dummies.columns) if "_A" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_region", "high_income", "aware"]
-    B_columns = [c for c in list(df_with_dummies.columns) if "_B" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_region", "high_income", "aware"]
+    A_columns = [c for c in list(df_with_dummies.columns) if "_A" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_region", "coal_prox", "high_income", "aware"]
+    B_columns = [c for c in list(df_with_dummies.columns) if "_B" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_region", "coal_prox", "high_income", "aware"]
     new_columns = [col.replace( '_A', '') for col in A_columns]
 
     df_A = df_with_dummies[A_columns].copy()
@@ -213,8 +215,8 @@ def make_ready_for_regression(df_with_dummies):
 
 def make_long_descriptive(df):
     df = df.copy()
-    A_columns = [c for c in list(df.columns) if "_A" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_region", "high_income", "aware"]
-    B_columns = [c for c in list(df.columns) if "_A" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_region", "high_income", "aware"]
+    A_columns = [c for c in list(df.columns) if "_A" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_region", "coal_prox", "high_income", "aware"]
+    B_columns = [c for c in list(df.columns) if "_A" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_region", "coal_prox", "high_income", "aware"]
     new_columns = [col.replace( '_A', '') for col in A_columns]
 
     df_A = df[A_columns].copy()
@@ -256,3 +258,60 @@ def standardize(df, column):
     df[f'{column}_standardized'] = (df[column] - df[column].mean()) / df[column].std()
 
     return df
+
+def calculate_distance(lat1, lon1, lat2, lon2):
+    R = 6371000  # meters
+    rad1 = math.radians(lat1)  # φ, λ in radians φ1
+    rad2 = math.radians(lat2) #φ2
+    diff1 = math.radians(lat2 - lat1)
+    diff2 = math.radians(lon2 - lon1)
+
+    a = math.sin(diff1/2) * math.sin(diff1/2) + \
+        math.cos(rad1) * math.cos(rad2) * \
+        math.sin(diff2/2) * math.sin(diff2/2)
+    
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+
+    d = R * c  # in meters
+
+    d = d / 1000
+    d = round(d, 2)
+    return d
+
+def coal_prox_indicator(data_clean):
+
+    #https://www.globaldata.com/data-insights/mining/india--five-largest-coal-mines-in-2090702/#:~:text=The%20five%20largest%20coal%20mines,mmtpa%20of%20ROM%20in%202021.
+    coal_mines = {
+        'Gevra OC Mine' : [22.337439, 82.546566],
+        'Bhubaneswari OCP Mine' : [20.965332, 85.162714],
+        'Dipka OC Project': [22.327948, 82.557578],
+        'Kusmunda OC Mine' : [22.330294, 82.669243],
+        'Lakhanpur OCP Mine' : [21.765555, 83.820422]
+    }
+
+    #https://www.power-technology.com/features/feature-the-top-10-biggest-thermal-power-plants-in-india/?cf-view
+    coal_plants = {
+        'Mundra Thermal Power Station, Gujarat' : [22.824412, 69.547972],
+        'Mundra Ultra Mega Power Plant, Gujarat' : [22.815815, 69.525399],
+        'Sasan Ultra Mega Power Plant, Madhya Pradesh' : [23.983091, 82.618795],
+        'Tiroda Thermal Power Plant, Maharashtra' : [21.413246, 79.966920],
+        'Talcher Super Thermal Power Station, Odisha' : [21.096245, 85.073762],
+        'Rihand Thermal Power Station, Uttar Pradesh' : [24.027386, 82.790051],
+        'Sipat Thermal Power Plant, Chhattisgarh' : [22.136485, 82.289925],
+        'Chandrapur Super Thermal Power Station, Maharashtra' : [20.005170, 79.293512],
+        'NTPC Dadri, Uttar Pradesh' : [28.597505, 77.607886],
+    }
+
+    for name, coordinates in coal_mines.items():
+        data_clean[f'coal_mine_prox_{name}'] = data_clean.apply(lambda row: calculate_distance(row['LocationLatitude'], row['LocationLongitude'], coordinates[0], coordinates[1]), axis=1)
+
+    for name, coordinates in coal_plants.items():
+        data_clean[f'coal_plant_prox_{name}'] = data_clean.apply(lambda row: calculate_distance(row['LocationLatitude'], row['LocationLongitude'], coordinates[0], coordinates[1]), axis=1)
+
+
+    matching_columns = [col for col in data_clean.columns if col.startswith("coal_mine") or col.startswith("coal_plant")]
+
+    # Check if any value in the matching columns is smaller than 100
+    data_clean['coal_prox'] = data_clean[matching_columns].lt(50).any(axis=1).astype(int)
+
+    return data_clean

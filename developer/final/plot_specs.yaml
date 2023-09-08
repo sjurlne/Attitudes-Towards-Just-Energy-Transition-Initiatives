@@ -35,14 +35,14 @@ colors:
   - '#F08000' #att_2
   - 'purple' #att_1
 
-colors_control:
+colors_treated:
   - '#990000' #att_5
   - '#0066CC' #att_4
   - '#a33c67' #att_3
   - '#CC6600' #att_2
   - '#7F00FF' #att_1
 
-colors_treated:
+colors_control:
   - '#FF6666' #att_5
   - '#66B2FF' #att_4
   - '#c27e9a' #att_3

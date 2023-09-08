@@ -11,7 +11,7 @@ from final.plot import plot_relative_differences_grouped, attribute_support, plo
 from config import OUT, CODE
 from utilities import read_yaml
 
-#Plots:
+#Plots: 
 
 @pytask.mark.depends_on(
     {
@@ -42,7 +42,7 @@ from utilities import read_yaml
         'income' : OUT / "figures" / "MM_income.png",
         'awareness' : OUT / "figures" / "MM_awareness.png",
     } 
-    )
+    ) 
 def task_plot_relative_differences(depends_on, produces):
 
     # Fig 1
@@ -78,7 +78,7 @@ def task_plot_relative_differences(depends_on, produces):
     # Coal region
     model_non_coal_region = pd.read_csv(depends_on["data_non_coal_region"])
     model_coal_region = pd.read_csv(depends_on["data_coal_region"])
-    fig = plot_MM_group(model_non_coal_region, model_coal_region, data_info, group1="NonCoalRegion", group2="CoalRegion", width=1.0, plot_title="Marginal Means by coal region status")
+    fig = plot_MM_group(model_non_coal_region, model_coal_region, data_info, group1="MoreThan50km", group2="LessThan50km", width=1.0, plot_title="Marginal Means by living less or more than 50km from coal plant or mine")
     fig.write_image(produces['coal_region'])
 
     # Income

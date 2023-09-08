@@ -38,8 +38,8 @@ def task_fit_model_python(depends_on, produces):
     data_treated = data[data['treatment_status']==1]
     data_low_trust = data[data['trust_ID']==0]
     data_high_trust = data[data['trust_ID']==1]
-    data_non_coal_region = data[data['coal_region'] == 0]
-    data_coal_region = data[data['coal_region'] == 1]
+    data_non_coal_region = data[data['coal_prox'] == 0]
+    data_coal_region = data[data['coal_prox'] == 1]
     data_low_income = data[data['high_income'] == 0]
     data_high_income = data[data['high_income'] == 1]
     data_not_aware = data[data['aware'] == 0]
@@ -70,7 +70,6 @@ def task_fit_model_python(depends_on, produces):
     model_high_income.to_csv(produces['model_high_income'])
     model_not_aware.to_csv(produces['model_not_aware'])
     model_aware.to_csv(produces['model_aware'])
-    
 
 
 

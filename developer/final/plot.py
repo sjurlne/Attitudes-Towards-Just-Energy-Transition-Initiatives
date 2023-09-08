@@ -357,24 +357,6 @@ def plot_MM_group(model_control, model_treated, data_info, group1, group2, width
     # Loop through each attribute group and add the data for 'control' to the plot
     for i, levels in enumerate(att_levels):
 
-        att_coefficients = [model_treated.iloc[0][f'att_{5-i}_{level}_MM'] for level in levels]
-        att_standard_errors = [model_treated.iloc[1][f'att_{5-i}_{level}_MM']*1.97 for level in levels]
-
-        fig.add_trace(go.Scatter(
-            x=att_coefficients,
-            y=levels,
-            mode='markers',
-            error_x=dict(type='data', array=att_standard_errors, color=att_colors_treated[i], thickness=1.5),
-            marker=dict(color=att_colors_treated[i], size=10),  # Use different colors for treated group
-            orientation='h',
-            showlegend=False,
-            name='Treated',  # Add a legend name for the treated group
-        ))
-        
-
-    # Loop through each attribute group and add the data for 'treated' to the plot
-    for i, levels in enumerate(att_levels):
-
         att_coefficients = [model_control.iloc[0][f'att_{5-i}_{level}_MM'] for level in levels]
         att_standard_errors = [model_control.iloc[1][f'att_{5-i}_{level}_MM']*1.97  for level in levels]
 
@@ -387,6 +369,24 @@ def plot_MM_group(model_control, model_treated, data_info, group1, group2, width
             orientation='h',
             showlegend=False,
             name='Control',  # Add a legend name for the control group
+        ))
+        
+
+    # Loop through each attribute group and add the data for 'treated' to the plot
+    for i, levels in enumerate(att_levels):
+
+        att_coefficients = [model_treated.iloc[0][f'att_{5-i}_{level}_MM'] for level in levels]
+        att_standard_errors = [model_treated.iloc[1][f'att_{5-i}_{level}_MM']*1.97 for level in levels]
+
+        fig.add_trace(go.Scatter(
+            x=att_coefficients,
+            y=levels,
+            mode='markers',
+            error_x=dict(type='data', array=att_standard_errors, color=att_colors_treated[i], thickness=1.5),
+            marker=dict(color=att_colors_treated[i], size=10),  # Use different colors for treated group
+            orientation='h',
+            showlegend=False,
+            name='Treated',  # Add a legend name for the treated group
         ))
 
         fig.add_shape(

@@ -46,3 +46,4 @@ def task_clean_data_python(produces, depends_on):
     data_long.to_csv(produces["long"], index=True)
     data_regression.to_csv(produces["regression"], index=True)
     data_freq.to_csv(produces['freq'], index=True)
+    

@@ -129,5 +129,9 @@ variables:
     type: 'numerical'
     names:
     - 'ageFilter'
+  coal:
+    type: 'numerical'
+    names:
+    - 'coal_prox'
     
   
