@@ -3,9 +3,6 @@ import pandas as pd
 import numpy as np
 import math
 
-from geopy.geocoders import Nominatim
-from geopy.exc import GeocoderTimedOut
-
 def clean_data(df, specs, renaming_specs):
     """Cleans and preprocesses the input DataFrame according to provided specifications.
 
@@ -22,7 +19,10 @@ def clean_data(df, specs, renaming_specs):
 
     """
     # Initial Cleaning
+    df = df.drop([0, 1])
 
+    df['LocationLatitude'] = df['LocationLatitude'].astype(float)
+    df['LocationLongitude'] = df['LocationLongitude'].astype(float)
     df = coal_prox_indicator(df)
     
     df = df.replace(renaming_specs['utility'])
@@ -33,8 +33,9 @@ def clean_data(df, specs, renaming_specs):
 
     df['district'] = df['district'].replace(renaming_specs['district'])
 
-    df['coal_region'] = df['state']
-    df['coal_region'] = df['state'].replace(renaming_specs['coal_region'])
+    # geolocation relevant
+    #df['coal_region'] = df['state']
+    #df['coal_region'] = df['state'].replace(renaming_specs['coal_region'])
 
     for category in list(renaming_specs['attributes'].keys()):
         if category == 'soc_distributive':
@@ -73,7 +74,7 @@ def clean_data(df, specs, renaming_specs):
     # Add group indicators
     df = _inconsistency(df)
     df = _trust_ID(df)
-    df = _coal_region(df)
+    #df = _coal_region(df)
     df = _high_income(df)
     df = _awareness(df)
 
@@ -104,7 +105,8 @@ def _coal_region(df):
     return df
 
 def _high_income(df):
-    df['high_income'] = (df['SC0'] > 5).astype(int)
+    df['SC0'] = df['SC0'].fillna(5)
+    df['high_income'] = (df['SC0'].astype(int, errors='ignore') > 5).astype(int)
     return df
 
 def _awareness(df):
@@ -137,7 +139,6 @@ def make_long(df, renaming_specs):
                       'trust_in_governement_3',
                       'trust_average',
                       'trust_ID',
-                      'coal_region',
                       'coal_prox',
                       'high_income',
                       'aware',
@@ -193,8 +194,8 @@ def make_dummy(df, renaming_specs):
     return df_with_dummies
 
 def make_ready_for_regression(df_with_dummies):
-    A_columns = [c for c in list(df_with_dummies.columns) if "_A" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_region", "coal_prox", "high_income", "aware"]
-    B_columns = [c for c in list(df_with_dummies.columns) if "_B" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_region", "coal_prox", "high_income", "aware"]
+    A_columns = [c for c in list(df_with_dummies.columns) if "_A" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_prox", "high_income", "aware"]
+    B_columns = [c for c in list(df_with_dummies.columns) if "_B" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_prox", "high_income", "aware"]
     new_columns = [col.replace( '_A', '') for col in A_columns]
 
     df_A = df_with_dummies[A_columns].copy()
@@ -215,8 +216,8 @@ def make_ready_for_regression(df_with_dummies):
 
 def make_long_descriptive(df):
     df = df.copy()
-    A_columns = [c for c in list(df.columns) if "_A" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_region", "coal_prox", "high_income", "aware"]
-    B_columns = [c for c in list(df.columns) if "_A" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_region", "coal_prox", "high_income", "aware"]
+    A_columns = [c for c in list(df.columns) if "_A" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_prox", "high_income", "aware"]
+    B_columns = [c for c in list(df.columns) if "_A" in c] + ["inconsistent", "treatment_status", "trust_ID", "coal_prox", "high_income", "aware"]
     new_columns = [col.replace( '_A', '') for col in A_columns]
 
     df_A = df[A_columns].copy()

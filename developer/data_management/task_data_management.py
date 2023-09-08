@@ -12,7 +12,7 @@ from utilities import read_yaml
 
 @pytask.mark.depends_on(
     {
-        "raw_data": OUT / "data" / "main_sample_w_geo.csv",
+        "raw_data" : IN / "main_sample.csv",
         "mock_data" : MOCK_DATA / "new_mock_data.csv", 
         "specs": CODE / "data_management" / "specs.yaml",
         "renaming_replacing" : CODE / "data_management" / "renaming_replacing.yaml",
@@ -46,4 +46,4 @@ def task_clean_data_python(produces, depends_on):
     data_long.to_csv(produces["long"], index=True)
     data_regression.to_csv(produces["regression"], index=True)
     data_freq.to_csv(produces['freq'], index=True)
-    
+

@@ -99,10 +99,10 @@ variables:
   region:
     type: 'categorical'
     names:
-    - 'state'
+    #- 'state'
     - 'locationFilter'
     - 'district'
-    - 'coal_region'
+    #- 'coal_region'
   duration:
     type: 'numerical'
     names:
