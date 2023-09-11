@@ -1,56 +1,36 @@
-\begin{center}
-\begin{tabular}{lclc}
+\begin{tabular}{lllllll}
 \toprule
-\textbf{Dep. Variable:}              &     support      & \textbf{  R-squared:         } &     0.025   \\
-\textbf{Model:}                      &       OLS        & \textbf{  Adj. R-squared:    } &     0.024   \\
-\textbf{Method:}                     &  Least Squares   & \textbf{  F-statistic:       } &     37.54   \\
-\textbf{Date:}                       & Fri, 08 Sep 2023 & \textbf{  Prob (F-statistic):} & 9.04e-105   \\
-\textbf{Time:}                       &     17:48:21     & \textbf{  Log-Likelihood:    } &   -9825.2   \\
-\textbf{No. Observations:}           &       15684      & \textbf{  AIC:               } & 1.969e+04   \\
-\textbf{Df Residuals:}               &       15665      & \textbf{  BIC:               } & 1.983e+04   \\
-\textbf{Df Model:}                   &          18      & \textbf{                     } &             \\
-\textbf{Covariance Type:}            &     cluster      & \textbf{                     } &             \\
-\bottomrule
-\end{tabular}
-\begin{tabular}{lcccccc}
-                                     & \textbf{coef} & \textbf{std err} & \textbf{z} & \textbf{P$> |$z$|$} & \textbf{[0.025} & \textbf{0.975]}  \\
+  & Model 1 & Model 1C & Model 2 & Model 2C & Model 3 & Model 3C \\
 \midrule
-\textbf{const}                       &       0.4807  &        0.023     &    20.767  &         0.000        &        0.435    &        0.526     \\
-\textbf{att\_1\_Eliminate2050}       &       0.0570  &        0.006     &     9.395  &         0.000        &        0.045    &        0.069     \\
-\textbf{att\_1\_Eliminate2070}       &      -0.0028  &        0.007     &    -0.402  &         0.688        &       -0.016    &        0.011     \\
-\textbf{att\_1\_Reduce2030}          &       0.0747  &        0.006     &    12.043  &         0.000        &        0.063    &        0.087     \\
-\textbf{att\_2\_EnergyAccess}        &       0.0411  &        0.007     &     6.213  &         0.000        &        0.028    &        0.054     \\
-\textbf{att\_2\_InsureWorkers}       &       0.0567  &        0.007     &     8.534  &         0.000        &        0.044    &        0.070     \\
-\textbf{att\_2\_LowPrices}           &       0.0537  &        0.007     &     8.006  &         0.000        &        0.041    &        0.067     \\
-\textbf{att\_2\_NothingSoc}          &      -0.0226  &        0.007     &    -3.148  &         0.002        &       -0.037    &       -0.009     \\
-\textbf{att\_3\_IdentityCoalRegions} &       0.0282  &        0.007     &     4.053  &         0.000        &        0.015    &        0.042     \\
-\textbf{att\_3\_IndustryCoalRegions} &       0.0534  &        0.007     &     8.086  &         0.000        &        0.040    &        0.066     \\
-\textbf{att\_3\_NothingEco}          &      -0.0104  &        0.008     &    -1.380  &         0.168        &       -0.025    &        0.004     \\
-\textbf{att\_3\_WorkersCoalRegion}   &       0.0578  &        0.007     &     8.623  &         0.000        &        0.045    &        0.071     \\
-\textbf{att\_4\_Gov\&Businesses}     &       0.0140  &        0.008     &     1.752  &         0.080        &       -0.002    &        0.030     \\
-\textbf{att\_4\_Gov\&CivilSociety}   &       0.0324  &        0.008     &     3.951  &         0.000        &        0.016    &        0.048     \\
-\textbf{att\_4\_Gov\&LaborUnions}    &       0.0197  &        0.008     &     2.316  &         0.021        &        0.003    &        0.036     \\
-\textbf{att\_4\_Gov\&LocalGov}       &       0.0381  &        0.008     &     4.572  &         0.000        &        0.022    &        0.054     \\
-\textbf{att\_4\_Gov\&Researchers}    &       0.0327  &        0.008     &     3.938  &         0.000        &        0.016    &        0.049     \\
-\textbf{att\_4\_GovAlone}            &      -0.0079  &        0.009     &    -0.914  &         0.360        &       -0.025    &        0.009     \\
-\textbf{att\_5\_Fin\&TechSupport}    &       0.0851  &        0.007     &    12.806  &         0.000        &        0.072    &        0.098     \\
-\textbf{att\_5\_FinSupportOnly}      &       0.0213  &        0.007     &     3.057  &         0.002        &        0.008    &        0.035     \\
-\textbf{att\_5\_NoInterference}      &       0.0019  &        0.007     &     0.251  &         0.802        &       -0.013    &        0.016     \\
-\textbf{att\_5\_TechSupportOnly}     &       0.0206  &        0.007     &     2.955  &         0.003        &        0.007    &        0.034     \\
-\textbf{ID}                          &    8.795e-05  &     1.98e-05     &     4.443  &         0.000        &     4.92e-05    &        0.000     \\
+const & \makecell{ 0.650 \\ (0.009) } & \makecell{ 0.523 \\ (0.022) } & \makecell{ 0.559 \\ (0.014) } & \makecell{ 0.445 \\ (0.023) } & \makecell{ 0.500 \\ (0.018) } & \makecell{ 0.395 \\ (0.025) } \\
+att_1_Eliminate2050 & \makecell{ 0.061 \\ (0.009) } & \makecell{ 0.061 \\ (0.009) } & \makecell{ 0.059 \\ (0.009) } & \makecell{ 0.060 \\ (0.009) } & \makecell{ 0.059 \\ (0.009) } & \makecell{ 0.059 \\ (0.009) } \\
+att_1_Reduce2030 & \makecell{ 0.074 \\ (0.010) } & \makecell{ 0.073 \\ (0.010) } & \makecell{ 0.072 \\ (0.010) } & \makecell{ 0.072 \\ (0.010) } & \makecell{ 0.071 \\ (0.010) } & \makecell{ 0.071 \\ (0.010) } \\
+att_2_EnergyAccess &   & \makecell{ 0.000 \\ (0.001) } & \makecell{ 0.064 \\ (0.010) } & \makecell{ 0.063 \\ (0.010) } & \makecell{ 0.063 \\ (0.010) } & \makecell{ 0.063 \\ (0.010) } \\
+att_2_InsureWorkers &   & \makecell{ 0.021 \\ (0.014) } & \makecell{ 0.072 \\ (0.010) } & \makecell{ 0.072 \\ (0.010) } & \makecell{ 0.072 \\ (0.010) } & \makecell{ 0.072 \\ (0.010) } \\
+att_2_LowPrices &   & \makecell{ 0.046 \\ (0.015) } & \makecell{ 0.075 \\ (0.010) } & \makecell{ 0.075 \\ (0.010) } & \makecell{ 0.075 \\ (0.010) } & \makecell{ 0.075 \\ (0.010) } \\
+att_3_IdentityCoalRegions &   & \makecell{ 0.081 \\ (0.015) } & \makecell{ 0.034 \\ (0.011) } & \makecell{ 0.034 \\ (0.011) } & \makecell{ 0.034 \\ (0.011) } & \makecell{ 0.034 \\ (0.011) } \\
+att_3_IndustryCoalRegions &   & \makecell{ 0.056 \\ (0.033) } & \makecell{ 0.062 \\ (0.010) } & \makecell{ 0.062 \\ (0.010) } & \makecell{ 0.061 \\ (0.010) } & \makecell{ 0.061 \\ (0.010) } \\
+att_3_WorkersCoalRegion &   & \makecell{ 0.048 \\ (0.025) } & \makecell{ 0.062 \\ (0.011) } & \makecell{ 0.062 \\ (0.011) } & \makecell{ 0.061 \\ (0.011) } & \makecell{ 0.060 \\ (0.011) } \\
+att_4_Gov&Businesses &   & \makecell{ 0.120 \\ (0.016) } &   & \makecell{ 0.000 \\ (0.001) } & \makecell{ 0.022 \\ (0.012) } & \makecell{ 0.022 \\ (0.012) } \\
+att_4_Gov&CivilSociety &   & \makecell{ 0.149 \\ (0.018) } &   & \makecell{ 0.021 \\ (0.014) } & \makecell{ 0.040 \\ (0.012) } & \makecell{ 0.040 \\ (0.012) } \\
+att_4_Gov&LaborUnions &   & \makecell{ 0.069 \\ (0.015) } &   & \makecell{ 0.046 \\ (0.015) } & \makecell{ 0.035 \\ (0.013) } & \makecell{ 0.036 \\ (0.013) } \\
+att_4_Gov&LocalGov &   & \makecell{ -0.009 \\ (0.014) } &   & \makecell{ 0.068 \\ (0.015) } & \makecell{ 0.046 \\ (0.013) } & \makecell{ 0.046 \\ (0.013) } \\
+att_4_Gov&Researchers &   &   &   & \makecell{ 0.044 \\ (0.034) } & \makecell{ 0.041 \\ (0.012) } & \makecell{ 0.042 \\ (0.012) } \\
+att_5_Fin&TechSupport &   &   &   & \makecell{ 0.035 \\ (0.025) } & \makecell{ 0.082 \\ (0.011) } & \makecell{ 0.081 \\ (0.011) } \\
+att_5_FinSupportOnly &   &   &   & \makecell{ 0.108 \\ (0.016) } & \makecell{ 0.020 \\ (0.011) } & \makecell{ 0.018 \\ (0.011) } \\
+att_5_TechSupportOnly &   &   &   & \makecell{ 0.135 \\ (0.018) } & \makecell{ 0.016 \\ (0.011) } & \makecell{ 0.017 \\ (0.010) } \\
+ageFilter &   &   &   & \makecell{ 0.055 \\ (0.015) } &   & \makecell{ 0.000 \\ (0.001) } \\
+genderFilter &   &   &   & \makecell{ -0.009 \\ (0.014) } &   & \makecell{ 0.022 \\ (0.014) } \\
+urban &   &   &   &   &   & \makecell{ 0.046 \\ (0.015) } \\
+district_NorthernZone &   &   &   &   &   & \makecell{ 0.060 \\ (0.015) } \\
+district_NorthEasternZone &   &   &   &   &   & \makecell{ 0.036 \\ (0.034) } \\
+district_CentralZone &   &   &   &   &   & \makecell{ 0.027 \\ (0.025) } \\
+district_EasternZone &   &   &   &   &   & \makecell{ 0.099 \\ (0.016) } \\
+district_WesternZone &   &   &   &   &   & \makecell{ 0.126 \\ (0.018) } \\
+district_SouthernZone &   &   &   &   &   & \makecell{ 0.046 \\ (0.015) } \\
+treatment_status &   &   &   &   &   & \makecell{ -0.009 \\ (0.014) } \\
+Obs & 1426,000000 & 1426,000000 & 1426,000000 & 1426,000000 & 1426,000000 & 1426,000000 \\
+R2 & 0,005000 & 0,014000 & 0,012000 & 0,021000 & 0,018000 & 0,027000 \\
+f-statistic & 33,553000 & 868,582000 & 21,578000 & 610,086000 & 16,349000 & 441,954000 \\
 \bottomrule
 \end{tabular}
-\begin{tabular}{lclc}
-\textbf{Omnibus:}       & 13093.039 & \textbf{  Durbin-Watson:     } &    1.340  \\
-\textbf{Prob(Omnibus):} &    0.000  & \textbf{  Jarque-Bera (JB):  } & 2738.605  \\
-\textbf{Skew:}          &   -0.836  & \textbf{  Prob(JB):          } &     0.00  \\
-\textbf{Kurtosis:}      &    1.818  & \textbf{  Cond. No.          } & 6.25e+18  \\
-\bottomrule
-\end{tabular}
-%\caption{OLS Regression Results}
-\end{center}
-
-Notes: \newline
- [1] Standard Errors are robust to cluster correlation (cluster) \newline
- [2] The smallest eigenvalue is 2.29e-28. This might indicate that there are \newline
- strong multicollinearity problems or that the design matrix is singular.

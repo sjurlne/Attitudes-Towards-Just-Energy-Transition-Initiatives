@@ -76,10 +76,9 @@ def attribute_support(df, attribute):
 
     return fig
 
+def plot_amce(model, data_info, width=1.0, plot_title="Fig 2: on support for policy attributes"):
 
-def plot_amce(model, data_info, width=1.0, plot_title="Fig 2: AMCE on support for policy attributes"):
-
-    order = data_info['order']
+    order = data_info['order_amce']
     att_1_levels = order['att_1']
     att_2_levels = order['att_2']
     att_3_levels = order['att_3']
@@ -149,9 +148,89 @@ def plot_amce(model, data_info, width=1.0, plot_title="Fig 2: AMCE on support fo
     # Show the interactive error bar plot
     return fig
 
+def plot_regression(model, data_info, width=1.0, plot_title="Fig 2: on support for policy attributes"):
+
+    order = data_info['order_reg']
+    att_1_levels = order['att_1']
+    att_2_levels = order['att_2']
+    att_3_levels = order['att_3']
+    att_4_levels = order['att_4']
+    att_5_levels = order['att_5']
+
+    att_levels = [att_5_levels, att_4_levels, att_3_levels, att_2_levels, att_1_levels]
+
+    att_colors = data_info['colors']
+
+    fig = go.Figure()
+
+    total_levels = sum(len(levels) for levels in att_levels) +  5
+
+    # Loop through each attribute group and add the data to the plot
+    for i, levels in enumerate(att_levels):
+        att_coefficients = [model.params[f'att_{5-i}_{level}'] for level in levels] + [0] 
+        att_standard_errors = [model.bse[f'att_{5-i}_{level}']*1.97 for level in levels] + [0]
+
+        reference = ['Eliminate2070', 'NothingSoc', 'NothingEco', 'GovAlone', 'NoInterference']
+
+        levels = levels + [reference[5-i-1]] 
+
+        fig.add_trace(go.Scatter(
+            x=att_coefficients,
+            y=levels,
+            mode='markers',
+            error_x=dict(type='data', array=att_standard_errors, color=att_colors[i], thickness=1.5),
+            marker=dict(color='#36454F', size=10),
+            orientation='h',
+            showlegend = False,
+        ))
+
+        fig.add_shape(
+            type="rect",
+            x0=-width,  # Set a fixed value for x0, which is left side of the plot
+            x1=width,  # Set the width of the shape to 1000 (right side of the plot)
+            y0=total_levels - sum(len(l) + 1 for l in att_levels[i:]),  # Set y0 to the starting level index
+            y1=total_levels - sum(len(l) + 1 for l in att_levels[i:]) + len(levels) -1,  # Set y1 to the ending level index
+            fillcolor=att_colors[i],
+            opacity=0.1,  # Set the opacity for a light transparent effect
+            layer="below",  # Place the rectangle below the scatter plot markers
+        )
+    
+    att_1_levels = att_1_levels + [reference[0]]
+    att_2_levels = att_2_levels + [reference[1]]
+    att_3_levels = att_3_levels + [reference[2]] 
+    att_4_levels = att_4_levels + [reference[3]] 
+    att_5_levels = att_5_levels + [reference[4]]
+
+    # Add a vertical line at x=0 for reference
+    fig.add_shape(type="line", x0=0, x1=0, y0=att_5_levels[0], y1=att_1_levels[-1], line=dict(color="gray", width=1, dash='dash'))
+
+    # Update the layout of the error bar plot
+    fig.update_layout(
+        title={
+            'text': plot_title,
+            'x': 0.0,
+            'xanchor': 'center',
+            'font': {'family': 'Computer Modern'}
+        },
+        xaxis_title='AMCE on support (0-1)',
+        yaxis_title='Attribute Levels',
+        yaxis=dict(categoryorder='array', categoryarray=att_5_levels),  # Set the categoryorder for y-axis based on att_1_levels
+        xaxis=dict(tickformat='.2f', zeroline=False, range=[-0.3,0.3]),  # Remove x-axis zeroline
+        showlegend=True,  # Show legend with attribute names
+        margin=dict(l=80, r=30, b=40, t=80),
+        height=800,  # Set the height of the plot to 600 pixels
+        width=1000,
+        title_x=0.50,
+        paper_bgcolor="#EADDCA",
+        plot_bgcolor='rgba(0,0,0,0)',
+    ) 
+
+    # Show the interactive error bar plot
+    return fig
+
 def plot_MM(MM_data, data_info, width=1.0, plot_title="Fig 3: Marginal Means on support for policy attributes"):
 
-    order = data_info['order']
+    order = data_info['order_amce']
     att_1_levels = order['att_1']
     att_2_levels = order['att_2']
     att_3_levels = order['att_3']
@@ -224,7 +303,7 @@ def plot_relative_differences_grouped(model_control, model_treated, data_info, g
     nobs_light = model_control.nobs / 12
     nobs_dark = model_treated.nobs / 12
 
-    order = data_info['order']
+    order = data_info['order_amce']
     att_1_levels = order['att_1']
     att_2_levels = order['att_2']
     att_3_levels = order['att_3']
@@ -338,7 +417,7 @@ def plot_MM_group(model_control, model_treated, data_info, group1, group2, width
     nobs_light = model_control.iloc[2,1] / 12
     nobs_dark = model_treated.iloc[2,1] / 12
 
-    order = data_info['order']
+    order = data_info['order_amce']
     att_1_levels = order['att_1']
     att_2_levels = order['att_2']
     att_3_levels = order['att_3']

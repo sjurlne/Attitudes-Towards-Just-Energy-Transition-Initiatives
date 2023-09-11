@@ -23,12 +23,12 @@ from utilities import read_yaml
         "long" : OUT / "data" / "data_long.csv",
         "regression" : OUT / "data" / "data_regression.csv",
         "freq" : OUT / "data" / "data_freq.csv",
-    }) 
-def task_clean_data_python(produces, depends_on):
+    })  
+def task_clean_data_python(produces, depends_on): 
     """Clean the data"""
     data = pd.read_csv(depends_on["raw_data"], encoding="utf8")
     specs = read_yaml(depends_on["specs"])
-    renaming_specs = read_yaml(depends_on["renaming_replacing"])
+    renaming_specs = read_yaml(depends_on["renaming_replacing"]) 
 
     # Cleaned data for inspection
     data = clean_data(data, specs, renaming_specs)
@@ -36,9 +36,9 @@ def task_clean_data_python(produces, depends_on):
 
     # Cleaned data for regression
     data_regression = make_dummy(data_long, renaming_specs)
-    data_regression = make_ready_for_regression(data_regression)
+    data_regression = make_ready_for_regression(data_regression, renaming_specs)
     data_regression = standardize(data_regression, "utility")
-    data_long = make_long_descriptive(data_long)
+    data_long = make_long_descriptive(data_long, renaming_specs)
 
     data_freq = frequencies(data_regression)
     
@@ -46,4 +46,5 @@ def task_clean_data_python(produces, depends_on):
     data_long.to_csv(produces["long"], index=True)
     data_regression.to_csv(produces["regression"], index=True)
     data_freq.to_csv(produces['freq'], index=True)
+
 

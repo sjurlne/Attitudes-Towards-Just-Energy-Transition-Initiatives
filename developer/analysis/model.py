@@ -6,17 +6,137 @@ import numpy as np
 import pandas as pd
 
 
-def fit_model_support(data):
-    """Fit a logit model to data."""
+def fit_model_1(data):
+    """Fit a linear probability model to data."""
+    outcome = 'support'
+    explanatory_vars = [col for col in data.columns if "att_1" in col]
+
+    # Having a reference category for each att:
+    to_remove = ['att_1_Eliminate2070', 'att_2_NothingSoc', 'att_3_NothingEco', 'att_4_GovAlone', 'att_5_NoInterference']
+    explanatory_vars = [x for x in explanatory_vars if x not in to_remove]
+
+
+    X = data[explanatory_vars].astype(int)
+    y = data[outcome].astype(int)
+
+    X = sm.add_constant(X)
+    model = sm.OLS(y, X).fit(cov_type='cluster', cov_kwds={'groups':data['ID']})
+
+    return model
+
+def fit_model_1_c(data):
+    """Fit a linear probability model to data."""
+    outcome = 'support'
+    explanatory_vars = [col for col in data.columns if "att_1" in col] + ['ageFilter', 'genderFilter', 'urban', 'district_NorthernZone', 
+                                                                            'district_NorthEasternZone', 'district_CentralZone', 'district_EasternZone',
+                                                                            'district_WesternZone', 'district_SouthernZone', 'treatment_status']
+
+    # Having a reference category for each att:
+    to_remove = ['att_1_Eliminate2070', 'att_2_NothingSoc', 'att_3_NothingEco', 'att_4_GovAlone', 'att_5_NoInterference']
+    explanatory_vars = [x for x in explanatory_vars if x not in to_remove]
+
+
+    X = data[explanatory_vars].astype(int)
+    y = data[outcome].astype(int)
+
+    X = sm.add_constant(X)
+    model = sm.OLS(y, X).fit(cov_type='cluster', cov_kwds={'groups':data['ID']})
+
+    return model
+
+def fit_model_2(data):
+    """Fit a linear probability model to data."""
+    outcome = 'support'
+    explanatory_vars = [col for col in data.columns if any(att in col for att in ["att_1", "att_2", "att_3"])]
+
+
+    # Having a reference category for each att:
+    to_remove = ['att_1_Eliminate2070', 'att_2_NothingSoc', 'att_3_NothingEco', 'att_4_GovAlone', 'att_5_NoInterference']
+    explanatory_vars = [x for x in explanatory_vars if x not in to_remove]
+
+
+    X = data[explanatory_vars].astype(int)
+    y = data[outcome].astype(int)
+
+    X = sm.add_constant(X)
+    model = sm.OLS(y, X).fit(cov_type='cluster', cov_kwds={'groups':data['ID']})
+
+    return model
+
+def fit_model_2_c(data):
+    """Fit a linear probability model to data."""
+    outcome = 'support'
+    explanatory_vars = [col for col in data.columns if any(att in col for att in ["att_1", "att_2", "att_3"])] + ['ageFilter', 'genderFilter', 'urban', 'district_NorthernZone', 
+                                                                            'district_NorthEasternZone', 'district_CentralZone', 'district_EasternZone',
+                                                                            'district_WesternZone', 'district_SouthernZone', 'treatment_status']
+
+    # Having a reference category for each att:
+    to_remove = ['att_1_Eliminate2070', 'att_2_NothingSoc', 'att_3_NothingEco', 'att_4_GovAlone', 'att_5_NoInterference']
+    explanatory_vars = [x for x in explanatory_vars if x not in to_remove]
+
+
+    X = data[explanatory_vars].astype(int)
+    y = data[outcome].astype(int)
+
+    X = sm.add_constant(X)
+    model = sm.OLS(y, X).fit(cov_type='cluster', cov_kwds={'groups':data['ID']})
+
+    return model
+
+def fit_model_3(data):
+    """Fit a linear probability model to data."""
+    outcome = 'support'
+    explanatory_vars = [col for col in data.columns if "att" in col]
+
+    # Having a reference category for each att:
+    to_remove = ['att_1_Eliminate2070', 'att_2_NothingSoc', 'att_3_NothingEco', 'att_4_GovAlone', 'att_5_NoInterference']
+    explanatory_vars = [x for x in explanatory_vars if x not in to_remove]
+
+
+    X = data[explanatory_vars].astype(int)
+    y = data[outcome].astype(int)
+
+    X = sm.add_constant(X)
+    model = sm.OLS(y, X).fit(cov_type='cluster', cov_kwds={'groups':data['ID']})
+
+    return model
+
+def fit_model_3_c(data):
+    """Fit a linear probability model to data."""
+    outcome = 'support'
+    explanatory_vars = [col for col in data.columns if "att" in col] +  ['ageFilter', 'genderFilter', 'urban', 'district_NorthernZone', 
+                                                                            'district_NorthEasternZone', 'district_CentralZone', 'district_EasternZone',
+                                                                            'district_WesternZone', 'district_SouthernZone', 'treatment_status']
+
+    # Having a reference category for each att:
+    to_remove = ['att_1_Eliminate2070', 'att_2_NothingSoc', 'att_3_NothingEco', 'att_4_GovAlone', 'att_5_NoInterference']
+    explanatory_vars = [x for x in explanatory_vars if x not in to_remove]
+
+
+    X = data[explanatory_vars].astype(int)
+    y = data[outcome].astype(int)
+
+    X = sm.add_constant(X)
+    model = sm.OLS(y, X).fit(cov_type='cluster', cov_kwds={'groups':data['ID']})
+
+    return model
+
+
+
+
+def fit_model_support_c(data):
+    """Fit a linear probability model to data."""
 
     outcome_name = 'support'
-    explanatory_vars = [col for col in data.columns if "att" in col] + ['ID']
+    explanatory_vars = [col for col in data.columns if "att" in col] + ['ageFilter', 'genderFilter', 'urban', 'district_NorthernZone', 
+                                                                        'district_NorthEasternZone', 'district_CentralZone', 'district_EasternZone',
+                                                                        'district_WesternZone', 'district_SouthernZone']
 
     X = data[explanatory_vars].astype(int)
     y = data[outcome_name].astype(int)
 
     X = sm.add_constant(X)
-    model = sm.OLS(y, X).fit(cov_type='cluster', cov_kwds={'groups':X['ID']})
+    model = sm.OLS(y, X).fit(cov_type='cluster', cov_kwds={'groups': data['ID']})
 
     return model
 

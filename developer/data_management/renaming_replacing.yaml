@@ -59,7 +59,35 @@ new_names:
   - 'att_4_B'
   - 'att_5_A'
   - 'att_5_B'
-  
+
+keep:
+  - "inconsistent"
+  - "treatment_status"
+  - "trust_ID"
+  - "coal_prox"
+  - "high_income"
+  - "aware"
+  - "urban"
+  - "genderFilter"
+  - "ageFilter"
+  - "district_NorthernZone"
+  - "district_NorthEasternZone"
+  - "district_CentralZone"
+  - "district_EasternZone"
+  - "district_WesternZone"
+  - "district_SouthernZone"
+
+keep_descriptive:
+  - "inconsistent"
+  - "treatment_status"
+  - "trust_ID"
+  - "coal_prox"
+  - "high_income"
+  - "aware"
+  - "urban"
+  - "genderFilter"
+  - "ageFilter"
+
 coal_region:
   'Odisha' : 1
   'Jharkhand' : 1
@@ -79,13 +107,19 @@ coal_region:
   #https://coal.gov.in/en/major-statistics/coal-reserves
 
 district:
-  1 : NorthernZone
-  2 : NorthEasternZone
-  3 : CentralZone
-  4 : EasternZone
-  5 : WesternZone
-  6 : SouthernZone
+  '1' : NorthernZone
+  '2' : NorthEasternZone
+  '3' : CentralZone
+  '4' : EasternZone
+  '5' : WesternZone
+  '6' : SouthernZone
 
 policy_overview:
   'Yes' : '1'
   'Coal' : '1'
+
+gender:
+  'Female' : 1
+  'Male' : 0
+  'Other' : 0
+  .nan : 0

@@ -1,10 +1,46 @@
 # Set order (higher means later)
-order:
+order_reg:
   #Bottom means higher in the plot.
   att_1:
-    - Eliminate2070
-    - Eliminate2050
+    #ref- Eliminate2070
     - Reduce2030
+    - Eliminate2050
+  att_2:
+    - LowPrices
+    - InsureWorkers
+    - EnergyAccess
+    #ref - NothingSoc
+  att_3:
+    - IdentityCoalRegions
+    - IndustryCoalRegions
+    - WorkersCoalRegion
+    #ref - NothingEco
+  att_4:
+    - Gov&CivilSociety
+    - Gov&Researchers
+    - Gov&Businesses
+    - Gov&LaborUnions
+    - Gov&LocalGov
+    #ref - GovAlone 
+  att_5:
+    - Fin&TechSupport
+    - FinSupportOnly
+    - TechSupportOnly
+    #ref - NoInterference
+
+colors:
+  - 'red' #att_5
+  - 'blue' #att_4
+  - 'green' #att_3
+  - '#F08000' #att_2
+  - 'purple' #att_1
+
+order_amce:
+  #Bottom means higher in the plot.
+  att_1:
+    - Reduce2030
+    - Eliminate2050
+    - Eliminate2070
   att_2:
     - LowPrices
     - InsureWorkers
@@ -27,13 +63,6 @@ order:
     - FinSupportOnly
     - TechSupportOnly
     - NoInterference
-
-colors:
-  - 'red' #att_5
-  - 'blue' #att_4
-  - 'green' #att_3
-  - '#F08000' #att_2
-  - 'purple' #att_1
 
 colors_treated:
   - '#990000' #att_5

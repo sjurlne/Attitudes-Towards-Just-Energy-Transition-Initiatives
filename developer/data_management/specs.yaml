@@ -101,7 +101,6 @@ variables:
     names:
     #- 'state'
     - 'locationFilter'
-    - 'district'
     #- 'coal_region'
   duration:
     type: 'numerical'
@@ -133,5 +132,8 @@ variables:
     type: 'numerical'
     names:
     - 'coal_prox'
+    - 'urban'
+    - 'district'
+  
     
   
