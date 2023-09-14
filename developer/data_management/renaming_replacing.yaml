@@ -65,9 +65,9 @@ keep:
   - "treatment_status"
   - "trust_ID"
   - "coal_prox"
+  - "coal_state"
   - "high_income"
   - "aware"
-  - "urban"
   - "genderFilter"
   - "ageFilter"
   - "district_NorthernZone"
@@ -82,28 +82,23 @@ keep_descriptive:
   - "treatment_status"
   - "trust_ID"
   - "coal_prox"
+  - "coal_state"
   - "high_income"
   - "aware"
-  - "urban"
   - "genderFilter"
   - "ageFilter"
 
-coal_region:
+coal_state:
   'Odisha' : 1
   'Jharkhand' : 1
   'Chhattisgarh' : 1
   'West Bengal' : 1
   'Madhya Pradesh' : 1
   'Telangana' : 1
-  'Maharashtra' : 1
-  'Bihar' : 1
-  'Andhra Pradesh' : 1
-  'Uttar Pradesh' : 1
-  'Meghalaya' : 1
-  'Assam' : 1
-  'Nagaland' : 1
-  'Sikkim' : 1
-  'Arunachal Pradesh' : 1
+  #'Maharashtra' : 1
+  #'Bihar' : 1
+  #'Andhra Pradesh' : 1
+  #'Uttar Pradesh' : 1
   #https://coal.gov.in/en/major-statistics/coal-reserves
 
 district:

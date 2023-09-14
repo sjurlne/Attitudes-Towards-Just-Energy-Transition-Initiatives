@@ -5,9 +5,10 @@ sys.path = list(set(sys.path))
 
 import pandas as pd
 import pytask
+import plotly.io as pio
 
 from analysis.model import load_model
-from final.plot import attribute_support, plot_amce, plot_regression, plot_MM, plot_MM_group
+from final.plot import attribute_support, plot_regression, plot_MM, plot_MM_group, plot_AMCE_group
 from config import OUT, CODE
 from utilities import read_yaml
 
@@ -18,95 +19,113 @@ from utilities import read_yaml
         "data_info": CODE / "final" / "plot_specs.yaml",
         "data_long" : OUT / "data" / "data_long.csv",
         "data_MM" : OUT / "models" / "data_MM.csv",
-        "data_old": OUT / "models" / "model_old.pickle",
         "data": OUT / "models" / "model3c.pickle",
+        "model_amce_high_trust": OUT / "models" / "model_amce_high_trust.pickle",
+        "model_amce_low_trust" : OUT / "models" / "model_amce_low_trust.pickle",
+        "model_amce_aware" : OUT / "models" / "model_amce_aware.pickle",
+        "model_amce_not_aware" : OUT / "models" / "model_amce_not_aware.pickle",
         "data_control" : OUT / "models" / "model_control.csv",
         "data_treated" : OUT / "models" / "model_treated.csv",
         "data_low_trust" : OUT / "models" / "model_low_trust.csv",
         "data_high_trust" : OUT / "models" / "model_high_trust.csv",
-        "data_non_coal_region" : OUT / "models" / "model_non_coal_region.csv",
-        "data_coal_region" : OUT / "models" / "model_coal_region.csv",
+        "data_non_coal_prox" : OUT / "models" / "model_non_coal_prox.csv",
+        "data_coal_prox" : OUT / "models" / "model_coal_prox.csv",
+        "data_non_coal_state" : OUT / "models" / "model_non_coal_state.csv",
+        "data_coal_state" : OUT / "models" / "model_coal_state.csv",
         "data_low_income" : OUT / "models" / "model_low_income.csv",
         "data_high_income" :OUT / "models" / "model_high_income.csv",
         "data_not_aware" : OUT / "models" / "model_not_aware.csv",
         "data_aware" :OUT / "models" / "model_aware.csv",
-        "data_rural" : OUT / "models" / "model_rural.csv",
-        "data_urban" : OUT / "models" / "model_urban.csv",
-    },
+    }, 
     ) 
 @pytask.mark.produces(
     {
-        'support' : OUT / "figures" / "support_plot_coal_phase_out.png",
-        'amce' : OUT / "figures" / "AMCE_on_support.png",
-        'reg_amce' : OUT / "figures" / "AMCE _from_reg_on_support.png",
-        'MM' : OUT / "figures" / "MM_on_support.png",
+        'support' : OUT / "figures" / "FIG1_support_plot_coal_phase_out.png", 
+        'reg_amce' : OUT / "figures" / "FIG2_from_reg_on_support.png",
+        'MM' : OUT / "figures" / "FIG3_MM_on_support.png",
         'treatment'  : OUT / "figures" / "MM_treatment.png",
-        'trust'  : OUT / "figures" / "MM_trust.png",
-        'coal_region' : OUT / "figures" / "MM_region.png",
+        'trust_MM'  : OUT / "figures" / "FIG4_2_MM_trust.png",
+        'trust_AMCE'  : OUT / "figures" / "FIG4_1_AMCE_trust.png",
+        'awareness_MM' : OUT / "figures" / "FIG5_2_MM_awareness.png",  
+        'awareness_AMCE' : OUT / "figures" / "FIG5_1_AMCE_awareness.png",  
+        'coal_prox' : OUT / "figures" / "MM_coal_prox.png",
+        'coal_state' : OUT / "figures" / "MM_coal_state.png",
         'income' : OUT / "figures" / "MM_income.png",
-        'awareness' : OUT / "figures" / "MM_awareness.png",
-        'urban' : OUT / "figures" / "MM_urban.png"
-    } 
-    ) 
-def task_plot_relative_differences(depends_on, produces):
-
+    }     
+    )    
+def task_plot_relative_differences(depends_on, produces):   
+   
     # Fig 1
     data_clean = pd.read_csv(depends_on["data_long"])
     fig = attribute_support(data_clean, "att_1")
-    fig.write_image(produces['support'])
+    pio.write_image(fig, produces['support'],scale=4, width=700, height=600)
 
-    data_info = read_yaml(depends_on["data_info"])
+    data_info = read_yaml(depends_on["data_info"])  
 
-    # Fig 2
-    model = load_model(depends_on["data_old"])
-    fig = plot_amce(model, data_info, width=1.0)
-    fig.write_image(produces['amce'])
-
+    # Fig 2 (Paper)
     model = load_model(depends_on["data"])
     fig = plot_regression(model, data_info, width=1.0)
-    fig.write_image(produces['reg_amce'])
+    pio.write_image(fig, produces['reg_amce'], scale=4, width=550, height=800)
 
-    # Fig 3
+    # Fig 3 (Paper) 
     model = pd.read_csv(depends_on["data_MM"])
     fig = plot_MM(model, data_info)
-    fig.write_image(produces['MM'])
+    pio.write_image(fig, produces['MM'], scale=4, width=550, height=800) 
 
-    # Grouped by:
+    # Fig 4.1 (Paper) 
+    model_amce_high_trust = load_model(depends_on["model_amce_high_trust"])
+    model_amce_low_trust = load_model(depends_on["model_amce_low_trust"])
+    fig = plot_AMCE_group(model_amce_low_trust, model_amce_high_trust, data_info, group1="LowTrust", group2="HighTrust", width=1.0, plot_title="AMCE by High trust / Low trust")
+    fig.write_image(produces['trust_AMCE'])
+    pio.write_image(fig, produces['trust_AMCE'], scale=4, width=550, height=800) 
+
+    # Fig 4.2 (Paper):  
+    model_low_trust = pd.read_csv(depends_on["data_low_trust"])
+    model_high_trust = pd.read_csv(depends_on["data_high_trust"])
+    fig = plot_MM_group(model_low_trust, model_high_trust, data_info, group1="LowTrust", group2="HighTrust", width=1.0, plot_title="Marginal Means by High trust / Low trust")
+    fig.write_image(produces['trust_MM']) 
+    pio.write_image(fig, produces['trust_MM'], scale=4, width=550, height=800) 
+ 
+    # Fig 5.1 (Paper) 
+    model_amce_aware = load_model(depends_on["model_amce_aware"])
+    model_amce_not_aware = load_model(depends_on["model_amce_not_aware"])
+    fig = plot_AMCE_group(model_amce_not_aware, model_amce_aware, data_info, group1="Not Aware", group2="Aware", width=1.0, plot_title="AMCE by energy policy awareness")
+    fig.write_image(produces['awareness_AMCE'])
+    pio.write_image(fig, produces['awareness_AMCE'], scale=4, width=550, height=800) 
+ 
+    # Fig 5.2 (Paper)
+    model_not_aware = pd.read_csv(depends_on["data_not_aware"])
+    model_aware = pd.read_csv(depends_on["data_aware"])
+    fig = plot_MM_group(model_not_aware, model_aware, data_info, group1="Not Aware", group2="Aware", width=1.0, plot_title="Marginal Means by awareness")
+    fig.write_image(produces['awareness_MM'])
+    pio.write_image(fig, produces['awareness_MM'], scale=4, width=550, height=800) 
+    
+
+    # Grouped by: 
     # Treatment
     model_control = pd.read_csv(depends_on["data_control"])
     model_treated = pd.read_csv(depends_on["data_treated"])
     fig = plot_MM_group(model_control, model_treated, data_info, group1="Control", group2="Treatment", width=1.0)
     fig.write_image(produces['treatment'])
 
-    # Trust:  
-    model_low_trust = pd.read_csv(depends_on["data_low_trust"])
-    model_high_trust = pd.read_csv(depends_on["data_high_trust"])
-    fig = plot_MM_group(model_low_trust, model_high_trust, data_info, group1="LowTrust", group2="HighTrust", width=1.0, plot_title="Marginal Means by High trust / Low trust")
-    fig.write_image(produces['trust'])
-    
-    # Coal region
-    model_non_coal_region = pd.read_csv(depends_on["data_non_coal_region"])
-    model_coal_region = pd.read_csv(depends_on["data_coal_region"])
-    fig = plot_MM_group(model_non_coal_region, model_coal_region, data_info, group1="MoreThan50km", group2="LessThan50km", width=1.0, plot_title="Marginal Means by living less or more than 50km from coal plant or mine")
-    fig.write_image(produces['coal_region'])
+    # Coal prox
+    model_non_coal_prox = pd.read_csv(depends_on["data_non_coal_prox"])
+    model_coal_prox = pd.read_csv(depends_on["data_coal_prox"])
+    fig = plot_MM_group(model_non_coal_prox, model_coal_prox, data_info, group1="MoreThan50km", group2="LessThan50km", width=1.0, plot_title="Marginal Means by living less or more than 50km from coal plant or mine")
+    fig.write_image(produces['coal_prox'])
+
+    # Coal state
+    model_non_coal_state = pd.read_csv(depends_on["data_non_coal_state"])
+    model_coal_state = pd.read_csv(depends_on["data_coal_state"])
+    fig = plot_MM_group(model_non_coal_state, model_coal_state, data_info, group1="Not Coal State", group2="Coal State", width=1.0, plot_title="Marginal Means by living in a coal state")
+    fig.write_image(produces['coal_state'])
 
     # Income
     model_low_income = pd.read_csv(depends_on["data_low_income"])
     model_high_income = pd.read_csv(depends_on["data_high_income"])
     fig = plot_MM_group(model_low_income, model_high_income, data_info, group1="LowIncome", group2="HighIncome", width=1.0, plot_title="Marginal Means by income")
-    fig.write_image(produces['income'])
+    fig.write_image(produces['income']) 
 
-    # Awareness
-    model_not_aware = pd.read_csv(depends_on["data_not_aware"])
-    model_aware = pd.read_csv(depends_on["data_aware"])
-    fig = plot_MM_group(model_not_aware, model_aware, data_info, group1="Not Aware", group2="Aware", width=1.0, plot_title="Marginal Means by awareness")
-    fig.write_image(produces['awareness'])
-
-    # Urban
-    model_rural = pd.read_csv(depends_on["data_rural"])
-    model_urban = pd.read_csv(depends_on["data_urban"])
-    fig = plot_MM_group(model_rural, model_urban, data_info, group1="Rural", group2="Urban", width=1.0, plot_title="Marginal Means by Urban")
-    fig.write_image(produces['urban'])
 
 """Writing Latex Tables out of estimation Tables!!! 
 Store a table in LaTeX format with the estimation results (Python version)."""
@@ -167,7 +186,7 @@ def task_create_results_table_python(depends_on, produces):
     #for model_index in range(len(model_names)):
     #    data_dict[model_names[model_index]].extend([nobs_values[model_index], rsquared_values[model_index], f_statistic_values[model_index]])
     for i in range(0,6):
-        empty = [None] * (27 - len(coefficients[i]))
+        empty = [None] * (26 - len(coefficients[i]))
         data_dict[model_names[i]] = coefficients[i] + empty + [nobs_values[i], rsquared_values[i], f_statistics[i]]
 
     #data_dict[' '].append(len(data_dict[' ']))

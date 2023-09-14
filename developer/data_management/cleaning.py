@@ -18,13 +18,10 @@ def clean_data(df, specs, renaming_specs):
         _inconsistency: An internal function used to compute the inconsistency indicator.
 
     """
-    # Initial Cleaning
     df = df.drop([0, 1])
-
     df['LocationLatitude'] = df['LocationLatitude'].astype(float)
     df['LocationLongitude'] = df['LocationLongitude'].astype(float)
     df = coal_prox_indicator(df)
-    df = city_prox_indicator(df)
     
     df = df.replace(renaming_specs['utility'])
     df = df.replace(renaming_specs['treatment'])
@@ -33,10 +30,10 @@ def clean_data(df, specs, renaming_specs):
     df = df.replace(renaming_specs['policy_overview'])
 
     df['district'] = df['district'].replace(renaming_specs['district'])
+    df['state'] = df['district_2']
 
     # geolocation relevant
-    #df['coal_region'] = df['state']
-    #df['coal_region'] = df['state'].replace(renaming_specs['coal_region'])
+    df['coal_state'] = df['state'].replace(renaming_specs['coal_state'])
 
     for category in list(renaming_specs['attributes'].keys()):
         if category == 'soc_distributive':
@@ -75,7 +72,7 @@ def clean_data(df, specs, renaming_specs):
     # Add group indicators
     df = _inconsistency(df)
     df = _trust_ID(df)
-    #df = _coal_region(df)
+    df = _coal_state(df)
     df = _high_income(df)
     df = _awareness(df)
 
@@ -85,8 +82,7 @@ def clean_data(df, specs, renaming_specs):
 
 def _trust_ID(df):
     df['trust_average'] = df[['trust_in_governement_1', 'trust_in_governement_2', 'trust_in_governement_3']].astype(int).mean(axis=1)
-    average = df['trust_average'].mean(axis=0)
-    df['trust_ID'] = df['trust_average'] > 4#> average
+    df['trust_ID'] = df['trust_average'] >= 5#> average
 
     return df
 
@@ -101,8 +97,8 @@ def _inconsistency(df):
     
     return df
 
-def _coal_region(df):
-    df['coal_region'] = (df['coal_region'] == 1).astype(int)
+def _coal_state(df):
+    df['coal_state'] = (df['coal_state'] == 1).astype(int)
     return df
 
 def _high_income(df):
@@ -141,9 +137,9 @@ def make_long(df, renaming_specs):
                       'trust_average',
                       'trust_ID',
                       'coal_prox',
+                      'coal_state',
                       'high_income',
                       'aware',
-                      'urban',
                       'genderFilter',
                       'ageFilter',
                       'district',
@@ -393,33 +389,33 @@ def coal_prox_indicator(data_clean):
     matching_columns = [col for col in data_clean.columns if col.startswith("coal_mine") or col.startswith("coal_plant")]
 
     # Check if any value in the matching columns is smaller than 100
-    data_clean['coal_prox'] = data_clean[matching_columns].lt(100).any(axis=1).astype(int)
+    data_clean['coal_prox'] = data_clean[matching_columns].lt(50).any(axis=1).astype(int)
 
     return data_clean
 
-def city_prox_indicator(data_clean):
+# def city_prox_indicator(data_clean):
 
-    city_data = {
-        "Mumbai": [19.073, 72.883],
-        "Delhi": [28.652, 77.231],
-        "Bengaluru": [12.972, 77.594],
-        "Hyderabad": [17.384, 78.456],
-        "Ahmedabad": [23.026, 72.587],
-        "Chennai": [13.088, 80.278],
-        "Kolkata": [22.563, 88.363],
-        "Surat": [21.196, 72.83],
-        "Pune": [18.52, 73.855],
-        "Kanpur": [26.465, 80.35],
-        "Jaipur": [26.92, 75.788],
-        "Lucknow": [26.839, 80.923]
-    }
+#     city_data = {
+#         "Mumbai": [19.073, 72.883],
+#         "Delhi": [28.652, 77.231],
+#         "Bengaluru": [12.972, 77.594],
+#         "Hyderabad": [17.384, 78.456],
+#         "Ahmedabad": [23.026, 72.587],
+#         "Chennai": [13.088, 80.278],
+#         "Kolkata": [22.563, 88.363],
+#         "Surat": [21.196, 72.83],
+#         "Pune": [18.52, 73.855],
+#         "Kanpur": [26.465, 80.35],
+#         "Jaipur": [26.92, 75.788],
+#         "Lucknow": [26.839, 80.923]
+#     }
 
-    for name, coordinates in city_data.items():
-        data_clean[f'city_prox_{name}'] = data_clean.apply(lambda row: calculate_distance(row['LocationLatitude'], row['LocationLongitude'], coordinates[0], coordinates[1]), axis=1)
+#     for name, coordinates in city_data.items():
+#         data_clean[f'city_prox_{name}'] = data_clean.apply(lambda row: calculate_distance(row['LocationLatitude'], row['LocationLongitude'], coordinates[0], coordinates[1]), axis=1)
 
-    matching_columns = [col for col in data_clean.columns if col.startswith("city_prox_")]
+#     matching_columns = [col for col in data_clean.columns if col.startswith("city_prox_")]
 
-    # Check if any value in the matching columns is smaller than 100
-    data_clean['urban'] = data_clean[matching_columns].lt(15).any(axis=1).astype(int)
+#     # Check if any value in the matching columns is smaller than 100
+#     data_clean['urban'] = data_clean[matching_columns].lt(15).any(axis=1).astype(int)
 
-    return data_clean
+#     return data_clean

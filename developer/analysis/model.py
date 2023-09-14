@@ -27,7 +27,7 @@ def fit_model_1(data):
 def fit_model_1_c(data):
     """Fit a linear probability model to data."""
     outcome = 'support'
-    explanatory_vars = [col for col in data.columns if "att_1" in col] + ['ageFilter', 'genderFilter', 'urban', 'district_NorthernZone', 
+    explanatory_vars = [col for col in data.columns if "att_1" in col] + ['ageFilter', 'genderFilter', 'district_NorthernZone', 
                                                                             'district_NorthEasternZone', 'district_CentralZone', 'district_EasternZone',
                                                                             'district_WesternZone', 'district_SouthernZone', 'treatment_status']
 
@@ -66,7 +66,7 @@ def fit_model_2(data):
 def fit_model_2_c(data):
     """Fit a linear probability model to data."""
     outcome = 'support'
-    explanatory_vars = [col for col in data.columns if any(att in col for att in ["att_1", "att_2", "att_3"])] + ['ageFilter', 'genderFilter', 'urban', 'district_NorthernZone', 
+    explanatory_vars = [col for col in data.columns if any(att in col for att in ["att_1", "att_2", "att_3"])] + ['ageFilter', 'genderFilter', 'district_NorthernZone', 
                                                                             'district_NorthEasternZone', 'district_CentralZone', 'district_EasternZone',
                                                                             'district_WesternZone', 'district_SouthernZone', 'treatment_status']
 
@@ -104,7 +104,7 @@ def fit_model_3(data):
 def fit_model_3_c(data):
     """Fit a linear probability model to data."""
     outcome = 'support'
-    explanatory_vars = [col for col in data.columns if "att" in col] +  ['ageFilter', 'genderFilter', 'urban', 'district_NorthernZone', 
+    explanatory_vars = [col for col in data.columns if "att" in col] +  ['ageFilter', 'genderFilter', 'district_NorthernZone', 
                                                                             'district_NorthEasternZone', 'district_CentralZone', 'district_EasternZone',
                                                                             'district_WesternZone', 'district_SouthernZone', 'treatment_status']
 
@@ -128,7 +128,7 @@ def fit_model_support_c(data):
     """Fit a linear probability model to data."""
 
     outcome_name = 'support'
-    explanatory_vars = [col for col in data.columns if "att" in col] + ['ageFilter', 'genderFilter', 'urban', 'district_NorthernZone', 
+    explanatory_vars = [col for col in data.columns if "att" in col] + ['ageFilter', 'genderFilter', 'district_NorthernZone', 
                                                                         'district_NorthEasternZone', 'district_CentralZone', 'district_EasternZone',
                                                                         'district_WesternZone', 'district_SouthernZone']
 

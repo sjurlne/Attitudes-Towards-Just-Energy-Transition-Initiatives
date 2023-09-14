@@ -99,7 +99,7 @@ variables:
   region:
     type: 'categorical'
     names:
-    #- 'state'
+    - 'state'
     - 'locationFilter'
     #- 'coal_region'
   duration:
@@ -132,8 +132,9 @@ variables:
     type: 'numerical'
     names:
     - 'coal_prox'
-    - 'urban'
+    - 'coal_state'
     - 'district'
+    - 'district_2'
   
     
   
