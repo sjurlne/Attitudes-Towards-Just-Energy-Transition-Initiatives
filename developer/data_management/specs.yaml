@@ -135,6 +135,12 @@ variables:
     - 'coal_state'
     - 'district'
     - 'district_2'
-  
+  justice:
+    type: 'numerical'  
+    names:
+    - justice_1
+    - justice_2
+    - justice_3
+    - justice_8
     
   

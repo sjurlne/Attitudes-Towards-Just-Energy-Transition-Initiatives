@@ -10,14 +10,14 @@ from config import OUT, CODE, IN, MOCK_DATA
 from data_management.cleaning import clean_data, make_long, make_dummy, make_ready_for_regression, frequencies, standardize, make_long_descriptive
 from utilities import read_yaml
 
-@pytask.mark.depends_on(
+@pytask.mark.depends_on( 
     {
         "main_sample" : IN / "main_sample_final.csv",
         "mock_data" : MOCK_DATA / "new_mock_data.csv", 
         "specs": CODE / "data_management" / "specs.yaml",
         "renaming_replacing" : CODE / "data_management" / "renaming_replacing.yaml",
     })
-@pytask.mark.produces(
+@pytask.mark.produces( 
     {
         "clean" : OUT / "data" / "data_clean.csv",
         "long" : OUT / "data" / "data_long.csv",
@@ -28,7 +28,7 @@ def task_clean_data_python(produces, depends_on):
     """Clean the data"""
     data = pd.read_csv(depends_on["main_sample"], encoding="utf8")
     specs = read_yaml(depends_on["specs"])
-    renaming_specs = read_yaml(depends_on["renaming_replacing"]) 
+    renaming_specs = read_yaml(depends_on["renaming_replacing"])  
 
     # Cleaned data for inspection
     data = clean_data(data, specs, renaming_specs)
@@ -46,5 +46,5 @@ def task_clean_data_python(produces, depends_on):
     data_long.to_csv(produces["long"], index=True)
     data_regression.to_csv(produces["regression"], index=True)
     data_freq.to_csv(produces['freq'], index=True)  
- 
+  
 

@@ -95,10 +95,10 @@ coal_state:
   'West Bengal' : 1
   'Madhya Pradesh' : 1
   'Telangana' : 1
-  #'Maharashtra' : 1
-  #'Bihar' : 1
-  #'Andhra Pradesh' : 1
-  #'Uttar Pradesh' : 1
+  'Maharashtra' : 1
+  'Bihar' : 1
+  'Andhra Pradesh' : 1
+  'Uttar Pradesh' : 1
   #https://coal.gov.in/en/major-statistics/coal-reserves
 
 district:

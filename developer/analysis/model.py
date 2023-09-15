@@ -170,7 +170,7 @@ def load_model(path):
 
 def _calculate_conditional_probability(df, column_x, column_y):
 
-    nobs = len(df)
+    nobs = len(df)/12
     # Step 1: Count occurrences of X=1 and Y=1 simultaneously
     xy_count = ((df[column_x] == True) & (df[column_y] == True)).sum()
     
@@ -184,11 +184,13 @@ def _calculate_conditional_probability(df, column_x, column_y):
     else:
         probability_y_given_x = np.nan
     
-    # Step 4: Calculate standard deviation
-    variance_y_given_x = (probability_y_given_x * (1 - probability_y_given_x)) / x_count
-    std_deviation = np.sqrt(variance_y_given_x).round(4)
+    # Step 4: Calculate clustered standard deviation
+    X = df[[column_x]].astype(float)
+    X = sm.add_constant(X)
+    model = sm.OLS(df[column_y], X)
+    clustered_se = model.fit(cov_type='cluster', cov_kwds={'groups': df['ID']}).bse[1].round(4)
     
-    return probability_y_given_x, std_deviation, nobs
+    return probability_y_given_x, clustered_se, nobs
 
 def marginal_means(df): 
     attributes_levels = df.columns[df.columns.str.startswith('att')]

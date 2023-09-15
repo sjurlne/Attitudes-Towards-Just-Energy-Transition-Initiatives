@@ -27,6 +27,8 @@ from config import OUT, CODE
         'model_amce_low_trust' : OUT / "models" / "model_amce_low_trust.pickle",
         'model_amce_aware' : OUT / "models" / "model_amce_aware.pickle",
         'model_amce_not_aware' : OUT / "models" / "model_amce_not_aware.pickle",
+        'model_amce_coal_state' : OUT / "models" / "model_amce_coal_state.pickle",
+        'model_amce_non_coal' : OUT / "models" / "model_amce_non_coal.pickle",
         'model_MM' : OUT / "models" / "data_MM.csv",
         'model_control' : OUT / "models" / "model_control.csv",
         'model_treated' : OUT / "models" / "model_treated.csv",
@@ -37,7 +39,7 @@ from config import OUT, CODE
         'model_non_coal_state' : OUT / "models" / "model_non_coal_state.csv",
         'model_coal_state' : OUT / "models" / "model_coal_state.csv",
         'model_low_income' : OUT / "models" / "model_low_income.csv",
-        'model_high_income' :OUT / "models" / "model_high_income.csv",
+        'model_high_income' :OUT / "models" / "model_high_income.csv", 
         'model_not_aware' : OUT / "models" / "model_not_aware.csv",
         'model_aware' :OUT / "models" / "model_aware.csv",
         }
@@ -58,6 +60,7 @@ def task_fit_model_python(depends_on, produces):
     data_not_aware = data[data['aware'] == 0]
     data_aware = data[data['aware'] == 1]
 
+
     # Fit regressions
     model1 = fit_model_1(data)
     model1c = fit_model_1_c(data)
@@ -66,9 +69,9 @@ def task_fit_model_python(depends_on, produces):
     model3 = fit_model_3(data)
     model3c = fit_model_3_c(data)
 
+
     #AMCE Main
     model_old = fit_model_support_c(data)
-
 
 
     # fit AMCE on Trust and Awareness
@@ -77,6 +80,9 @@ def task_fit_model_python(depends_on, produces):
 
     model_amce_aware = fit_model_3_c(data_aware)
     model_amce_not_aware = fit_model_3_c(data_not_aware)
+
+    model_amce_coal_state = fit_model_3_c(data_coal_state)
+    model_amce_non_coal = fit_model_3_c(data_non_coal_state)
     
 
 
@@ -110,6 +116,9 @@ def task_fit_model_python(depends_on, produces):
     model_amce_not_aware.save(produces['model_amce_not_aware'])
     model_amce_high_trust.save(produces['model_amce_high_trust'])
     model_amce_low_trust.save(produces['model_amce_low_trust'])
+    model_amce_coal_state.save(produces['model_amce_coal_state'])
+    model_amce_non_coal.save(produces['model_amce_non_coal'])
+    
 
 
     model_MM.to_csv(produces["model_MM"])

@@ -8,7 +8,7 @@ import pytask
 import plotly.io as pio
 
 from analysis.model import load_model
-from final.plot import attribute_support, plot_regression, plot_MM, plot_MM_group, plot_AMCE_group
+from final.plot import attribute_support, plot_regression, plot_MM, plot_MM_group, plot_AMCE_group, spatial_justice_coal_state 
 from config import OUT, CODE
 from utilities import read_yaml
 
@@ -24,6 +24,8 @@ from utilities import read_yaml
         "model_amce_low_trust" : OUT / "models" / "model_amce_low_trust.pickle",
         "model_amce_aware" : OUT / "models" / "model_amce_aware.pickle",
         "model_amce_not_aware" : OUT / "models" / "model_amce_not_aware.pickle",
+        "model_amce_coal_state" : OUT / "models" / "model_amce_coal_state.pickle",
+        "model_amce_non_coal" : OUT / "models" / "model_amce_non_coal.pickle",
         "data_control" : OUT / "models" / "model_control.csv",
         "data_treated" : OUT / "models" / "model_treated.csv",
         "data_low_trust" : OUT / "models" / "model_low_trust.csv",
@@ -44,12 +46,15 @@ from utilities import read_yaml
         'reg_amce' : OUT / "figures" / "FIG2_from_reg_on_support.png",
         'MM' : OUT / "figures" / "FIG3_MM_on_support.png",
         'treatment'  : OUT / "figures" / "MM_treatment.png",
-        'trust_MM'  : OUT / "figures" / "FIG4_2_MM_trust.png",
-        'trust_AMCE'  : OUT / "figures" / "FIG4_1_AMCE_trust.png",
-        'awareness_MM' : OUT / "figures" / "FIG5_2_MM_awareness.png",  
-        'awareness_AMCE' : OUT / "figures" / "FIG5_1_AMCE_awareness.png",  
-        'coal_prox' : OUT / "figures" / "MM_coal_prox.png",
+        'coal_MM'  : OUT / "figures" / "FIG4_2_MM_coal.png",
+        'coal_AMCE'  : OUT / "figures" / "FIG4_1_AMCE_coal.png",
+        'trust_MM'  : OUT / "figures" / "FIG5_2_MM_trust.png",
+        'trust_AMCE'  : OUT / "figures" / "FIG5_1_AMCE_trust.png",
+        'awareness_MM' : OUT / "figures" / "FIG6_2_MM_awareness.png",  
+        'awareness_AMCE' : OUT / "figures" / "FIG6_1_AMCE_awareness.png",  
+        'coal_prox' : OUT / "figures" / "MM_coal_prox.png", 
         'coal_state' : OUT / "figures" / "MM_coal_state.png",
+        'coal_state_spatial' : OUT / "figures" / "MM_coal_state_spatial.png",
         'income' : OUT / "figures" / "MM_income.png",
     }     
     )    
@@ -58,42 +63,56 @@ def task_plot_relative_differences(depends_on, produces):
     # Fig 1
     data_clean = pd.read_csv(depends_on["data_long"])
     fig = attribute_support(data_clean, "att_1")
-    pio.write_image(fig, produces['support'],scale=4, width=700, height=600)
+    pio.write_image(fig, produces['support'],scale=4, width=700, height=350)
 
     data_info = read_yaml(depends_on["data_info"])  
 
     # Fig 2 (Paper)
     model = load_model(depends_on["data"])
     fig = plot_regression(model, data_info, width=1.0)
-    pio.write_image(fig, produces['reg_amce'], scale=4, width=550, height=800)
+    pio.write_image(fig, produces['reg_amce'], scale=4, width=550, height=800)  
 
     # Fig 3 (Paper) 
     model = pd.read_csv(depends_on["data_MM"])
     fig = plot_MM(model, data_info)
     pio.write_image(fig, produces['MM'], scale=4, width=550, height=800) 
 
-    # Fig 4.1 (Paper) 
+    # Fig 4.1 (Paper)  
+    model_amce_coal = load_model(depends_on["model_amce_coal_state"])
+    model_amce_non_coal = load_model(depends_on["model_amce_non_coal"])
+    fig = plot_AMCE_group(model_amce_non_coal, model_amce_coal, data_info, group1="NonCoalState", group2="CoalState", width=1.0, plot_title="AMCE by Coal State")
+    fig.write_image(produces['coal_AMCE'])
+    pio.write_image(fig, produces['coal_AMCE'], scale=4, width=550, height=800) 
+
+    # Fig 4.2 (Paper):  
+    model_non_coal_state = pd.read_csv(depends_on["data_non_coal_state"])
+    model_coal_state = pd.read_csv(depends_on["data_coal_state"])
+    fig = plot_MM_group(model_non_coal_state, model_coal_state, data_info, group1="NonCoalState", group2="CoalState", width=1.0, plot_title="Marginal Means by Coal State")
+    fig.write_image(produces['coal_MM']) 
+    pio.write_image(fig, produces['coal_MM'], scale=4, width=550, height=800) 
+
+    # Fig 5.1 (Paper)  
     model_amce_high_trust = load_model(depends_on["model_amce_high_trust"])
     model_amce_low_trust = load_model(depends_on["model_amce_low_trust"])
     fig = plot_AMCE_group(model_amce_low_trust, model_amce_high_trust, data_info, group1="LowTrust", group2="HighTrust", width=1.0, plot_title="AMCE by High trust / Low trust")
     fig.write_image(produces['trust_AMCE'])
     pio.write_image(fig, produces['trust_AMCE'], scale=4, width=550, height=800) 
 
-    # Fig 4.2 (Paper):  
+    # Fig 5.2 (Paper):  
     model_low_trust = pd.read_csv(depends_on["data_low_trust"])
     model_high_trust = pd.read_csv(depends_on["data_high_trust"])
     fig = plot_MM_group(model_low_trust, model_high_trust, data_info, group1="LowTrust", group2="HighTrust", width=1.0, plot_title="Marginal Means by High trust / Low trust")
     fig.write_image(produces['trust_MM']) 
     pio.write_image(fig, produces['trust_MM'], scale=4, width=550, height=800) 
  
-    # Fig 5.1 (Paper) 
+    # Fig 6.1 (Paper) 
     model_amce_aware = load_model(depends_on["model_amce_aware"])
     model_amce_not_aware = load_model(depends_on["model_amce_not_aware"])
     fig = plot_AMCE_group(model_amce_not_aware, model_amce_aware, data_info, group1="Not Aware", group2="Aware", width=1.0, plot_title="AMCE by energy policy awareness")
     fig.write_image(produces['awareness_AMCE'])
     pio.write_image(fig, produces['awareness_AMCE'], scale=4, width=550, height=800) 
  
-    # Fig 5.2 (Paper)
+    # Fig 6.2 (Paper)
     model_not_aware = pd.read_csv(depends_on["data_not_aware"])
     model_aware = pd.read_csv(depends_on["data_aware"])
     fig = plot_MM_group(model_not_aware, model_aware, data_info, group1="Not Aware", group2="Aware", width=1.0, plot_title="Marginal Means by awareness")
@@ -113,6 +132,12 @@ def task_plot_relative_differences(depends_on, produces):
     model_coal_prox = pd.read_csv(depends_on["data_coal_prox"])
     fig = plot_MM_group(model_non_coal_prox, model_coal_prox, data_info, group1="MoreThan50km", group2="LessThan50km", width=1.0, plot_title="Marginal Means by living less or more than 50km from coal plant or mine")
     fig.write_image(produces['coal_prox'])
+
+    model_non_coal = pd.read_csv(depends_on["data_non_coal_state"])
+    model_coal = pd.read_csv(depends_on["data_coal_state"])
+    fig = spatial_justice_coal_state(model_non_coal, model_coal, data_info, group1="NonCoal", group2="Coal", width=1.0, plot_title="Marginal Means, Spatial Justice")
+    fig.write_image(produces['coal_state_spatial'])
+
 
     # Coal state
     model_non_coal_state = pd.read_csv(depends_on["data_non_coal_state"])
