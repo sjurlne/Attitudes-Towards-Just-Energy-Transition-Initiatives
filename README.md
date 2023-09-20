@@ -7,7 +7,7 @@
 
 Welcome to this repository replicating the results of my Master Thesis presented to the Department of Economics at the Rheinische Friedrich-Wilhelms-Universität Bonn.
 
-The project was done in cooperation with the German Institute of Development andSustainability (IDOS).
+The thesis builds on a professionally discrete choice experiment conducted in India, designed and conducted by me in cooperation with the German Institute of Development andSustainability (IDOS).
 
 ## Usage
 
