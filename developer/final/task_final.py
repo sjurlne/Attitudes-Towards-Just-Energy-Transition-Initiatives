@@ -13,7 +13,6 @@ from config import OUT, CODE
 from utilities import read_yaml
 
 #Plots: 
-
 @pytask.mark.depends_on(
     {
         "data_info": CODE / "final" / "plot_specs.yaml",
@@ -119,7 +118,6 @@ def task_plot_relative_differences(depends_on, produces):
     fig.write_image(produces['awareness_MM'])
     pio.write_image(fig, produces['awareness_MM'], scale=4, width=550, height=800) 
     
-
     # Grouped by: 
     # Treatment
     model_control = pd.read_csv(depends_on["data_control"])
@@ -138,7 +136,6 @@ def task_plot_relative_differences(depends_on, produces):
     fig = spatial_justice_coal_state(model_non_coal, model_coal, data_info, group1="NonCoal", group2="Coal", width=1.0, plot_title="Marginal Means, Spatial Justice")
     fig.write_image(produces['coal_state_spatial'])
 
-
     # Coal state
     model_non_coal_state = pd.read_csv(depends_on["data_non_coal_state"])
     model_coal_state = pd.read_csv(depends_on["data_coal_state"])
@@ -154,7 +151,6 @@ def task_plot_relative_differences(depends_on, produces):
 
 """Writing Latex Tables out of estimation Tables!!! 
 Store a table in LaTeX format with the estimation results (Python version)."""
-
 @pytask.mark.depends_on(
     {
         'model1' : OUT / "models" / "model1.pickle",

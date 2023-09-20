@@ -79,7 +79,6 @@ def clean_data(df, specs, renaming_specs):
     return df
 
 ### GROUP IDS:
-
 def _trust_ID(df):
     df['trust_average'] = df[['trust_in_governement_1', 'trust_in_governement_2', 'trust_in_governement_3']].astype(int).mean(axis=1)
     df['trust_ID'] = df['trust_average'] >= 5#> average
@@ -126,7 +125,6 @@ def make_long(df, renaming_specs):
         pandas.DataFrame: A long-format DataFrame.
 
     """
-
     long_df = pd.DataFrame()
     for round in range(1,7):
         df_temp = df[['ID',
@@ -240,13 +238,11 @@ def make_long_descriptive(df, renaming_specs):
     return df
 
 def _set_support_dummy(df):
-
     df['support'] = df['utility'] >= 5
     df['unsupport'] = df['utility'] <= 3
     return df
 
 def frequencies(conjoint_reg):
-    
     frequency_table =  {}
     groups = ['att_1', 'att_2','att_3', 'att_4', 'att_5']
     for group in groups:
@@ -392,30 +388,3 @@ def coal_prox_indicator(data_clean):
     data_clean['coal_prox'] = data_clean[matching_columns].lt(50).any(axis=1).astype(int)
 
     return data_clean
-
-# def city_prox_indicator(data_clean):
-
-#     city_data = {
-#         "Mumbai": [19.073, 72.883],
-#         "Delhi": [28.652, 77.231],
-#         "Bengaluru": [12.972, 77.594],
-#         "Hyderabad": [17.384, 78.456],
-#         "Ahmedabad": [23.026, 72.587],
-#         "Chennai": [13.088, 80.278],
-#         "Kolkata": [22.563, 88.363],
-#         "Surat": [21.196, 72.83],
-#         "Pune": [18.52, 73.855],
-#         "Kanpur": [26.465, 80.35],
-#         "Jaipur": [26.92, 75.788],
-#         "Lucknow": [26.839, 80.923]
-#     }
-
-#     for name, coordinates in city_data.items():
-#         data_clean[f'city_prox_{name}'] = data_clean.apply(lambda row: calculate_distance(row['LocationLatitude'], row['LocationLongitude'], coordinates[0], coordinates[1]), axis=1)
-
-#     matching_columns = [col for col in data_clean.columns if col.startswith("city_prox_")]
-
-#     # Check if any value in the matching columns is smaller than 100
-#     data_clean['urban'] = data_clean[matching_columns].lt(15).any(axis=1).astype(int)
-
-#     return data_clean

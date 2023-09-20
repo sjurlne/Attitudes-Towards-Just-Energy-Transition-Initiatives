@@ -13,7 +13,6 @@ from utilities import read_yaml
 @pytask.mark.depends_on( 
     {
         "main_sample" : IN / "main_sample_final.csv",
-        "mock_data" : MOCK_DATA / "new_mock_data.csv", 
         "specs": CODE / "data_management" / "specs.yaml",
         "renaming_replacing" : CODE / "data_management" / "renaming_replacing.yaml",
     })

@@ -1,8 +1,13 @@
-# conjoint
+# Master Thesis: Preferences Towards Just Energy Transition Initiatives: Evidence from India
 
+[![image](https://img.shields.io/badge/Python-3.11.0-gray)]()
+[![image](https://img.shields.io/badge/platform-win32-gray)]()
+[![image](https://img.shields.io/badge/ChromeDriver-Chromium-gray)](https://chromedriver.chromium.org/downloads)
+[![image](https://img.shields.io/badge/pytask-0.3.1-green)](https://pytask-dev.readthedocs.io/en/stable/)
 
-[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/sjurlne/conjoint/main.svg)](https://results.pre-commit.ci/latest/github/sjurlne/conjoint/main)
-[![image](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+Welcome to this repository replicating the results of my Master Thesis presented to the Department of Economics at the Rheinische Friedrich-Wilhelms-Universität Bonn.
+
+The project was done in cooperation with the German Institute of Development andSustainability (IDOS).
 
 ## Usage
 
@@ -24,3 +29,5 @@ $ pytask
 This project was created with [cookiecutter](https://github.com/audreyr/cookiecutter)
 and the
 [econ-project-templates](https://github.com/OpenSourceEconomics/econ-project-templates).
+
+

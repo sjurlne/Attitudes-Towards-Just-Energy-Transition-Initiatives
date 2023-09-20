@@ -6,9 +6,8 @@ sys.path = list(set(sys.path))
 import pandas as pd
 import pytask
 
-from analysis.model import fit_model_1, fit_model_1_c, fit_model_2, fit_model_2_c, fit_model_3, fit_model_3_c, fit_model_group, marginal_means, fit_model_support_c
-from config import OUT, CODE
-
+from analysis.model import fit_model_1, fit_model_1_c, fit_model_2, fit_model_2_c, fit_model_3, fit_model_3_c, marginal_means
+from config import OUT
 
 @pytask.mark.depends_on(
         {
@@ -60,7 +59,6 @@ def task_fit_model_python(depends_on, produces):
     data_not_aware = data[data['aware'] == 0]
     data_aware = data[data['aware'] == 1]
 
-
     # Fit regressions
     model1 = fit_model_1(data)
     model1c = fit_model_1_c(data)
@@ -68,11 +66,6 @@ def task_fit_model_python(depends_on, produces):
     model2c = fit_model_2_c(data)
     model3 = fit_model_3(data)
     model3c = fit_model_3_c(data)
-
-
-    #AMCE Main
-    model_old = fit_model_support_c(data)
-
 
     # fit AMCE on Trust and Awareness
     model_amce_high_trust = fit_model_3_c(data_high_trust)
@@ -83,9 +76,6 @@ def task_fit_model_python(depends_on, produces):
 
     model_amce_coal_state = fit_model_3_c(data_coal_state)
     model_amce_non_coal = fit_model_3_c(data_non_coal_state)
-    
-
-
 
     # Marginal Means
     model_MM = marginal_means(data)
@@ -102,15 +92,12 @@ def task_fit_model_python(depends_on, produces):
     model_not_aware = marginal_means(data_not_aware)
     model_aware = marginal_means(data_aware)
 
-
-
     model1.save(produces['model1'])
     model1c.save(produces['model1c'])
     model2.save(produces['model2'])
     model2c.save(produces['model2c'])
     model3.save(produces['model3'])
     model3c.save(produces['model3c'])
-
 
     model_amce_aware.save(produces['model_amce_aware'])
     model_amce_not_aware.save(produces['model_amce_not_aware'])
@@ -119,8 +106,6 @@ def task_fit_model_python(depends_on, produces):
     model_amce_coal_state.save(produces['model_amce_coal_state'])
     model_amce_non_coal.save(produces['model_amce_non_coal'])
     
-
-
     model_MM.to_csv(produces["model_MM"])
     model_control.to_csv(produces['model_control'])
     model_treated.to_csv(produces['model_treated'])
