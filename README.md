@@ -9,6 +9,8 @@ Welcome to this repository replicating the results of my Master Thesis presented
 
 The thesis builds on a professionally discrete choice experiment conducted in India, designed and conducted by me in cooperation with the German Institute of Development andSustainability (IDOS).
 
+I thank Daniele Malerba for cooperation.
+
 ## Usage
 
 To get started, create and activate the environment with
